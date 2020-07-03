@@ -1,0 +1,56 @@
+
+<div class="product-card">
+<mat-card class="product-card">
+  <img
+    mat-card-image
+    [src]="product.imageUrl"
+    alt="{{ product.title }}"
+    height="180vh"
+  />
+ 
+  <mat-card-content>
+    <p>
+      {{ product.farm.name }}
+    </p>
+  </mat-card-content>
+  <mat-card-header>
+    <div mat-card-avatar class="product-header-image"></div>
+    <mat-card-title>{{ product.title }}</mat-card-title>
+    <mat-card-subtitle>{{
+      product.price | currency: "USD":true
+    }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-footer>
+    <button
+      *ngIf="getQuantity() === 0; else updateQuantity"
+      (click)="addToCart()"
+      mat-raised-button
+      color="primary"
+      class="btn btn-block"
+    >
+      Add to Cart
+    </button>
+    <ng-template #updateQuantity>
+      <div class="row no-gutters">
+        <div class="col-2">
+          <button
+            (click)="removeFromCart()"
+            class="btn btn-secondary btn-block"
+          >
+            -
+          </button>
+        </div>
+        <div class="col text-center">
+          <div>{{ getQuantity() }} in cart</div>
+        </div>
+        <div class="col-2">
+          <button (click)="addToCart()" class="btn btn-secondary btn-block">
+            +
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </mat-card-footer>
+</mat-card>
+</div>

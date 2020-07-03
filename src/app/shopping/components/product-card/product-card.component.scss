@@ -1,0 +1,24 @@
+.mat-card-footer {
+  padding: 0;
+}
+
+// .mat-card {
+//   margin-bottom: 30px;
+// }
+
+.product-card {
+  max-width: 100%;
+  margin-bottom: 30px;
+}
+
+.product-card-img {
+  width: 15rem;
+  height: 25vh;
+  background-size: cover;
+}
+
+mat-card-title,
+mat-card-subtitle,
+p {
+  text-align: center;
+}

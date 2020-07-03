@@ -1,0 +1,57 @@
+//@import "~@angular/material/theming";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+//@include mat-core();
+
+// Define the theme.
+// $candy-app-primary: mat-palette($mat-green, A700);
+// $candy-app-accent: mat-palette($mat-pink, A200, A100, A400);
+// $candy-app-theme: mat-light-theme(
+//   (
+//     color: (
+//       primary: $candy-app-primary,
+//       accent: $candy-app-accent,
+//     ),
+//   )
+// );
+
+// Include the theme styles for only specified components.
+// @include mat-core-theme($candy-app-theme);
+// @include mat-button-theme($candy-app-theme);
+// @include mat-checkbox-theme($candy-app-theme);
+// @include mat-toolbar-theme($candy-app-theme);
+// @include mat-tooltip-theme($candy-app-theme);
+
+/*@mixin angular-material-theme($theme) {
+  @include mat-core-theme($theme);
+  @include mat-autocomplete-theme($theme);
+  @include mat-button-theme($theme);
+  @include mat-button-toggle-theme($theme);
+  @include mat-card-theme($theme);
+  @include mat-checkbox-theme($theme);
+  @include mat-chips-theme($theme);
+  @include mat-table-theme($theme);
+  @include mat-datepicker-theme($theme);
+  @include mat-dialog-theme($theme);
+  @include mat-expansion-panel-theme($theme);
+  @include mat-grid-list-theme($theme);
+  @include mat-icon-theme($theme);
+  @include mat-input-theme($theme);
+  @include mat-list-theme($theme);
+  @include mat-menu-theme($theme);
+  @include mat-paginator-theme($theme);
+  //@include mat-progress-bar-theme($theme);
+  @include mat-progress-spinner-theme($theme);
+  @include mat-radio-theme($theme);
+  @include mat-select-theme($theme);
+  @include mat-sidenav-theme($theme);
+  @include mat-slide-toggle-theme($theme);
+  @include mat-slider-theme($theme);
+  @include mat-tabs-theme($theme);
+  @include mat-toolbar-theme($theme);
+  @include mat-tooltip-theme($theme);
+  @include mat-simple-snack-bar-theme($theme);
+}*/

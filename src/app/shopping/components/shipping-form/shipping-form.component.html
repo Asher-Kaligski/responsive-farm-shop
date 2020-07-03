@@ -1,0 +1,154 @@
+<mat-card>
+  <mat-card-title>Shipping</mat-card-title>
+  <mat-card-content>
+    <form #f="ngForm" (ngSubmit)="submit(f)">
+      <mat-form-field class="full-width-input">
+        <mat-label>Country</mat-label>
+        <input
+          matInput
+          required
+          minlength="2"
+          maxlength="50"
+          ngModel
+          name="country"
+          #country="ngModel"
+          type="text"
+        />
+
+        <mat-hint>type a country name</mat-hint>
+        <ng-container *ngIf="country.touched && !country.valid">
+          <mat-error *ngIf="country.errors.required">
+            Country is required
+          </mat-error>
+          <mat-error *ngIf="country.errors.minlength">
+            country should be minimum
+            {{ country.errors.minlength.requiredLength }} characters
+          </mat-error>
+          <mat-error *ngIf="country.errors.maxlength">
+            country should be maximum
+            {{ country.errors.maxlength.requiredLength }} characters
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>City</mat-label>
+        <input
+          matInput
+          required
+          minlength="2"
+          maxlength="50"
+          ngModel
+          name="city"
+          #city="ngModel"
+          type="text"
+        />
+
+        <mat-hint>type a city name</mat-hint>
+        <ng-container *ngIf="city.touched && !city.valid">
+          <mat-error *ngIf="city.errors.required">
+            City is required
+          </mat-error>
+          <mat-error *ngIf="city.errors.minlength">
+            City should be minimum
+            {{ city.errors.minlength.requiredLength }} characters
+          </mat-error>
+          <mat-error *ngIf="city.errors.maxlength">
+            City should be maximum
+            {{ city.errors.maxlength.requiredLength }} characters
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>Address</mat-label>
+        <input
+          matInput
+          required
+          minlength="5"
+          maxlength="255"
+          ngModel
+          name="address"
+          #address="ngModel"
+          type="text"
+        />
+
+        <mat-hint>type an address</mat-hint>
+        <ng-container *ngIf="address.touched && !address.valid">
+          <mat-error *ngIf="address.errors.required">
+            Address is required
+          </mat-error>
+          <mat-error *ngIf="address.errors.minlength">
+            Address should be minimum
+            {{ address.errors.minlength.requiredLength }} characters
+          </mat-error>
+          <mat-error *ngIf="address.errors.maxlength">
+            Address should be maximum
+            {{ address.errors.maxlength.requiredLength }} characters
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>Post Code</mat-label>
+        <input
+          matInput
+          required
+          minlength="5"
+          maxlength="255"
+          ngModel
+          name="postCode"
+          #postCode="ngModel"
+          type="text"
+        />
+
+        <mat-hint>type an post code</mat-hint>
+        <ng-container *ngIf="postCode.touched && !postCode.valid">
+          <mat-error *ngIf="postCode.errors.required">
+            Post Code is required
+          </mat-error>
+          <mat-error *ngIf="postCode.errors.minlength">
+            Post Code should be minimum
+            {{ postCode.errors.minlength.requiredLength }} characters
+          </mat-error>
+          <mat-error *ngIf="postCode.errors.maxlength">
+            Post Code should be maximum
+            {{ postCode.errors.maxlength.requiredLength }} characters
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>Notes</mat-label>
+        <input
+          matInput
+          minlength="5"
+          maxlength="255"
+          ngModel
+          name="notes"
+          #notes="ngModel"
+          type="text"
+        />
+
+        <mat-hint>type your notes</mat-hint>
+        <ng-container *ngIf="notes.touched && !notes.valid">
+          <mat-error *ngIf="notes.errors.minlength">
+            Notes should be minimum
+            {{ postCode.errors.minlength.requiredLength }} characters
+          </mat-error>
+          <mat-error *ngIf="notes.errors.maxlength">
+            Notes should be maximum
+            {{ notes.errors.maxlength.requiredLength }} characters
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+
+      <button class="mx-1" mat-raised-button color="accent" routerLink="/shopping-cart">
+        Cancel
+      </button>
+      <button class="mx-1" mat-raised-button color="primary" [disabled]="!f.valid">
+        Place Order
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>

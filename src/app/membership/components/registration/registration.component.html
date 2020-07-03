@@ -1,0 +1,143 @@
+<div class="container">
+    <form #f="ngForm" (ngSubmit)="submit(f)">
+      <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input
+          required
+          minlength="2"
+          maxlength="30"
+          ngModel
+          name="firstName"
+          #firstName="ngModel"
+          type="text"
+          id="firstName"
+          class="form-control"
+        />
+        <div
+          *ngIf="firstName.touched && !firstName.valid"
+          class="alert alert-danger"
+        >
+          <div *ngIf="firstName.errors.required">
+            First Name is required
+          </div>
+          <div *ngIf="firstName.errors.minlength">
+            First Name should be minimum
+            {{ firstName.errors.minlength.requiredLength }} characters
+          </div>
+          <div *ngIf="firstName.errors.maxlength">
+            First Name should be maximum
+            {{ firstName.errors.maxlength.requiredLength }} characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lastName">Last Name</label>
+        <input
+          required
+          minlength="2"
+          maxlength="30"
+          ngModel
+          name="lastName"
+          #lastName="ngModel"
+          type="text"
+          id="lastName"
+          class="form-control"
+        />
+        <div
+          *ngIf="lastName.touched && !lastName.valid"
+          class="alert alert-danger"
+        >
+          <div *ngIf="lastName.errors.required">
+            Last Name is required
+          </div>
+          <div *ngIf="lastName.errors.minlength">
+            Last Name should be minimum
+            {{ lastName.errors.minlength.requiredLength }} characters
+          </div>
+          <div *ngIf="lastName.errors.maxlength">
+            Last Name should be maximum
+            {{ lastName.errors.maxlength.requiredLength }} characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          required
+          minlength="5"
+          maxlength="255"
+          ngModel
+          name="email"
+          #email="ngModel"
+          type="email"
+          id="email"
+          class="form-control"
+        />
+        <div *ngIf="email.touched && !email.valid" class="alert alert-danger">
+          <div *ngIf="email.errors.required">
+            Email is required
+          </div>
+          <div *ngIf="email.errors.minlength">
+            Email should be minimum
+            {{ email.errors.minlength.requiredLength }} characters
+          </div>
+          <div *ngIf="email.errors.maxlength">
+            Email should be maximum
+            {{ email.errors.maxlength.requiredLength }} characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          required
+          pattern="^[a-zA-Z0-9]{8,15}$"
+          ngModel
+          name="password"
+          #password="ngModel"
+          type="text"
+          id="password"
+          name="password"
+          class="form-control"
+        />
+        <div
+          *ngIf="password.touched && !password.valid"
+          class="alert alert-danger"
+        >
+          <div *ngIf="password.errors.pattern">
+            Password doesn't match the pattern
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input
+          required
+          minlength="5"
+          maxlength="30"
+          ngModel
+          name="phone"
+          #phone="ngModel"
+          type="text"
+          id="phone"
+          class="form-control"
+        />
+        <div *ngIf="phone.touched && !phone.valid" class="alert alert-danger">
+          <div *ngIf="phone.errors.required">
+            Phone is required
+          </div>
+          <div *ngIf="phone.errors.minlength">
+            Phone should be minimum
+            {{ phone.errors.minlength.requiredLength }} characters
+          </div>
+          <div *ngIf="phone.errors.maxlength">
+            Phone should be maximum
+            {{ phone.errors.maxlength.requiredLength }} characters
+          </div>
+        </div>
+      </div>
+  
+      <button [disabled]="!f.valid" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  

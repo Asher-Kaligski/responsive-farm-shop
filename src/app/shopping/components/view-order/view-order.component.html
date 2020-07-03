@@ -1,0 +1,23 @@
+<mat-card *ngIf="order$ | async as order">
+  <mat-card-title>Order Summary</mat-card-title>
+  <mat-card-subtitle
+    >the order placed at
+    {{ order.datePlaced | date: "medium" }}</mat-card-subtitle
+  >
+  <mat-card-content>
+    <ul class="list-group list-group-flush">
+      <li *ngFor="let item of order.shoppingCart.items" class="list-group-item">
+        {{ item.quantity }} * {{ item.product.title }}
+        <div class="float-right">
+          {{ item.itemTotalPrice | currency: "USD":true }}
+        </div>
+      </li>
+      <li class="list-group-item font-weight-bold">
+        Total
+        <div class="float-right">
+          {{ order.shoppingCart.totalPrice | currency: "USD":true }}
+        </div>
+      </li>
+    </ul>
+  </mat-card-content>
+</mat-card>

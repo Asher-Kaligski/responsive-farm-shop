@@ -1,0 +1,70 @@
+<mat-card>
+    <mat-card-content>
+      <form #f="ngForm" (ngSubmit)="login(f)">
+        <h1>Log In</h1>
+        <mat-spinner
+          *ngIf="isLoading"
+          mode="indeterminate"
+          diameter="30"
+        ></mat-spinner>
+        <mat-error *ngIf="!isValid">
+          Invalid email or password
+        </mat-error>
+  
+        <mat-form-field class="full-width-input">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            required
+            minlength="5"
+            maxlength="255"
+            ngModel
+            name="email"
+            #email="ngModel"
+            placeholder="Email"
+            type="email"
+          />
+          <ng-container *ngIf="email.touched && !email.valid">
+            <mat-error *ngIf="email.errors.required">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="email.errors.minlength">
+              Email should be minimum
+              {{ email.errors.minlength.requiredLength }} characters
+            </mat-error>
+            <mat-error *ngIf="email.errors.maxlength">
+              Email should be maximum
+              {{ email.errors.maxlength.requiredLength }} characters
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+  
+        <mat-form-field class="full-width-input">
+          <mat-label>Password</mat-label>
+          <input
+            matInput
+            required
+            pattern="^[a-zA-Z0-9]{8,15}$"
+            ngModel
+            name="password"
+            #password="ngModel"
+            type="text"
+            id="password"
+          />
+          <ng-container *ngIf="password.touched && !password.valid">
+            <mat-error *ngIf="password.errors.required">
+              Password is required
+            </mat-error>
+            <mat-error *ngIf="password.errors.pattern">
+              Password doesn't match the pattern
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+  
+        <button mat-raised-button color="primary" [disabled]="!f.valid">
+          Login
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  

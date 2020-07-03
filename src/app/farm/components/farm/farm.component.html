@@ -1,0 +1,165 @@
+<mat-card *ngIf="farm$ | async as farm">
+  <mat-card-content>
+    <form #f="ngForm" (ngSubmit)="submitOnUpdate(f)">
+      <h1>Update Farm</h1>
+
+      <mat-form-field class="full-width-input">
+        <mat-label> Farm Name</mat-label>
+        <input
+          matInput
+          required
+          minlength="2"
+          maxlength="30"
+          ngModel
+          name="name"
+          #name="ngModel"
+          placeholder="Farm Name"
+          type="text"
+          [(ngModel)]="farm.name"
+        />
+        <mat-hint>Type a unique farm name</mat-hint>
+        <ng-container *ngIf="name.touched && !name.valid">
+          <mat-error *ngIf="name.errors.required">
+            Farm Name is required
+          </mat-error>
+          <mat-error *ngIf="name.errors.minlength">
+            Farm Name should be minimum
+            {{ name.errors.minlength.requiredLength }} characters
+          </mat-error>
+          <mat-error *ngIf="name.errors.maxlength">
+            Farm Name should be maximum
+            {{ name.errors.maxlength.requiredLength }} characters
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>Phone Number</mat-label>
+        <input
+          matInput
+          required
+          minlength="5"
+          maxlength="30"
+          ngModel
+          name="phone"
+          #phone="ngModel"
+          placeholder="Phone Number"
+          type="text"
+          [(ngModel)]="farm.phone"
+        />
+        <mat-hint>Type valid phone number</mat-hint>
+        <ng-container *ngIf="phone.touched && !phone.valid">
+          <mat-error *ngIf="phone.errors.required">
+            Phone Number is required
+          </mat-error>
+          <mat-error *ngIf="phone.errors.minlength">
+            Phone Number should be minimum
+            {{ phone.errors.minlength.requiredLength }} characters
+          </mat-error>
+          <mat-error *ngIf="phone.errors.maxlength">
+            Phone Number should be maximum
+            {{ phone.errors.maxlength.requiredLength }} characters
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+      <h1>Choose Product Category</h1>
+      <mat-selection-list
+        required
+        [(ngModel)]="farm.categories"
+        ngModel
+        name="categories"
+        #categories="ngModel"
+      >
+        <mat-list-option *ngFor="let c of items" [value]="c.name">
+          {{ c.name }}
+        </mat-list-option>
+      </mat-selection-list>
+      <button mat-raised-button color="accent" routerLink="/">
+        Cancel
+      </button>
+      <button mat-raised-button color="primary" [disabled]="!f.valid">
+        Update
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
+
+<mat-card *ngIf="!(farm$ | async)">
+  <mat-card-content>
+    <form #f="ngForm" (ngSubmit)="submitOnCreate(f)">
+      <h1>Create Farm</h1>
+
+      <mat-form-field class="full-width-input">
+        <mat-label> Farm Name</mat-label>
+        <input
+          matInput
+          required
+          minlength="2"
+          maxlength="30"
+          ngModel
+          name="name"
+          #name="ngModel"
+          placeholder="Farm Name"
+          type="text"
+        />
+
+        <mat-hint>Type a unique farm name</mat-hint>
+        <ng-container *ngIf="name.touched && !name.valid">
+          <mat-error *ngIf="name.errors.required">
+            Farm Name is required
+          </mat-error>
+          <mat-error *ngIf="name.errors.minlength">
+            Farm Name should be minimum
+            {{ name.errors.minlength.requiredLength }} characters
+          </mat-error>
+          <mat-error *ngIf="name.errors.maxlength">
+            Farm Name should be maximum
+            {{ name.errors.maxlength.requiredLength }} characters
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+
+      <mat-form-field class="full-width-input">
+        <mat-label>Phone Number</mat-label>
+        <input
+          matInput
+          required
+          minlength="5"
+          maxlength="30"
+          ngModel
+          name="phone"
+          #phone="ngModel"
+          placeholder="Phone Number"
+          type="text"
+        />
+        <mat-hint>Type valid phone number</mat-hint>
+        <ng-container *ngIf="phone.touched && !phone.valid">
+          <mat-error *ngIf="phone.errors.required">
+            Phone Number is required
+          </mat-error>
+          <mat-error *ngIf="phone.errors.minlength">
+            Phone Number should be minimum
+            {{ phone.errors.minlength.requiredLength }} characters
+          </mat-error>
+          <mat-error *ngIf="phone.errors.maxlength">
+            Phone Number should be maximum
+            {{ phone.errors.maxlength.requiredLength }} characters
+          </mat-error>
+        </ng-container>
+      </mat-form-field>
+      <h1>Choose Product Category</h1>
+      <mat-select required ngModel name="categories" #categories="ngModel">
+        <mat-option *ngFor="let c of items" [value]="c">
+          {{ c }}
+        </mat-option>
+      </mat-select>
+
+      <button mat-raised-button color="accent" routerLink="/">
+        Cancel
+      </button>
+      <button mat-raised-button color="primary" [disabled]="!f.valid">
+        Create
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
