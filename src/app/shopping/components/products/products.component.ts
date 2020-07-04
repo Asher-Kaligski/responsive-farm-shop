@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { CategoryService } from './../../../shared/services/category.service';
+import { Category } from './product-filter/product-filter.component';
+import { MediaObserver } from '@angular/flex-layout';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from 'shared/models/product';
 import { ShoppingCart } from 'shared/models/shopping-cart';
@@ -10,9 +13,11 @@ import { ShoppingCartService } from 'shared/services/shopping-cart.service';
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnChanges {
   products: Product[] = [];
   filteredProducts: Product[] = [];
+  categories$: Promise<Category[]>;
+  farmNames: string[] = [];
   cart: ShoppingCart;
   category: string;
   farmName: string;
@@ -20,13 +25,22 @@ export class ProductsComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private route: ActivatedRoute,
-    private cartService: ShoppingCartService
+    private cartService: ShoppingCartService,
+    public media: MediaObserver,
+    private categoryService: CategoryService
   ) {}
+
+  ngOnChanges() {
+    if (this.products)
+      this.farmNames = [...new Set(this.products.map((p) => p.farm.name))];
+  }
 
   async ngOnInit() {
     this.cart = await this.cartService.getCart();
 
     this.products = await this.productService.getAll();
+
+    this.categories$ = this.categoryService.getAll();
 
     this.route.queryParamMap.subscribe((params) => {
       this.category = params.get('category');

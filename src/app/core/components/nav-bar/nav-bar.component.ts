@@ -15,7 +15,6 @@ const { SHOPPING_CART_ID } = StorageKey;
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit, OnDestroy {
-  @Input('device-xs') deviceXs: boolean;
 
   cartItemCount: number;
   cart: ShoppingCart;
