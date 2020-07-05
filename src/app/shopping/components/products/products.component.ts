@@ -1,12 +1,14 @@
-import { CategoryService } from './../../../shared/services/category.service';
-import { Category } from './product-filter/product-filter.component';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
-import { Component, OnInit, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { Product } from 'shared/models/product';
 import { ShoppingCart } from 'shared/models/shopping-cart';
 import { ProductService } from 'shared/services/product.service';
 import { ShoppingCartService } from 'shared/services/shopping-cart.service';
+
+import { CategoryService } from './../../../shared/services/category.service';
+import { Category } from './product-filter/product-filter.component';
 
 @Component({
   selector: 'app-products',
@@ -16,7 +18,9 @@ import { ShoppingCartService } from 'shared/services/shopping-cart.service';
 export class ProductsComponent implements OnInit, OnChanges {
   products: Product[] = [];
   filteredProducts: Product[] = [];
-  categories$: Promise<Category[]>;
+  categories: Category[];
+  filteredOptions: Observable<Category[]>;
+
   farmNames: string[] = [];
   cart: ShoppingCart;
   category: string;
@@ -40,8 +44,6 @@ export class ProductsComponent implements OnInit, OnChanges {
 
     this.products = await this.productService.getAll();
 
-    this.categories$ = this.categoryService.getAll();
-
     this.route.queryParamMap.subscribe((params) => {
       this.category = params.get('category');
       this.farmName = params.get('farmName');
@@ -57,17 +59,17 @@ export class ProductsComponent implements OnInit, OnChanges {
     });
   }
 
-  productFilter(query: string){
+  productFilter(query: string) {
     this.filteredProducts = query
-    ? this.products.filter(
-        (p) =>
-          p.title.toLocaleLowerCase().includes(query.toLowerCase()) ||
-          p.category
-            .toLocaleLowerCase()
-            .includes(query.toLocaleLowerCase()) ||
-          p.price.toString().includes(query)
-      )
-    : this.products;
+      ? this.products.filter(
+          (p) =>
+            p.title.toLocaleLowerCase().includes(query.toLowerCase()) ||
+            p.category
+              .toLocaleLowerCase()
+              .includes(query.toLocaleLowerCase()) ||
+            p.price.toString().includes(query)
+        )
+      : this.products;
 
     this.category = null;
     this.farmName = null;

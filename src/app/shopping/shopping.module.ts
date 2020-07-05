@@ -17,6 +17,8 @@ import { ShoppingCartSummaryComponent } from './components/shopping-cart-summary
 import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.component';
 import { ViewOrderComponent } from './components/view-order/view-order.component';
 import { ShoppingRoutingModule } from './shopping-routing.module';
+import { MobileFarmFilterComponent } from './components/products/mobile-farm-filter/mobile-farm-filter.component';
+import { MobileProductFilterComponent } from './components/products/mobile-product-filter/mobile-product-filter.component';
 
 
 @NgModule({
@@ -30,7 +32,9 @@ import { ShoppingRoutingModule } from './shopping-routing.module';
     ShoppingCartSummaryComponent,
     ShippingFormComponent,
     ViewOrderComponent,
-    FarmFilterComponent
+    FarmFilterComponent,
+    MobileFarmFilterComponent,
+    MobileProductFilterComponent
   ],
   imports: [
     CommonModule,

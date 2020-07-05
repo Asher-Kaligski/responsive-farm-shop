@@ -12,14 +12,21 @@
     <p>
       {{ product.farm.name }}
     </p>
+    <div>
+      <!-- <div mat-card-avatar class="product-header-image"></div> -->
+      <mat-card-title>{{ product.title }}</mat-card-title>
+      <mat-card-subtitle>{{
+        product.price | currency: "USD":true
+      }}</mat-card-subtitle>
+    </div>
   </mat-card-content>
-  <mat-card-header>
+  <!-- <div>
     <div mat-card-avatar class="product-header-image"></div>
     <mat-card-title>{{ product.title }}</mat-card-title>
     <mat-card-subtitle>{{
       product.price | currency: "USD":true
     }}</mat-card-subtitle>
-  </mat-card-header>
+  </div> -->
 
   <mat-card-footer>
     <button

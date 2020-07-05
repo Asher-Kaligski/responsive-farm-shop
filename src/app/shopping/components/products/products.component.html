@@ -1,6 +1,8 @@
 <div class="row">
   <div fxHide fxShow.gt-sm class="col-3">
-    <farm-filter [products]="products" [farmName]="farmName"></farm-filter>
+    <div class="container sticky-top">
+      <farm-filter [products]="products" [farmName]="farmName"></farm-filter>
+    </div>
   </div>
   <div class="col">
     <product-filter
@@ -10,56 +12,45 @@
     ></product-filter>
 
     <ng-template #mobileFilter>
-      <div fxLayout="row">
-      <div fxFlex="15"></div>
-      <div
-        fxLayout="row"
-        fxLayoutAlign="space-around center"
-        fxLayoutGap="5%"
-        fxFlex="70"
-      >
-        <mat-form-field class="mobile-filter">
-          <input
-            type="text"
-            placeholder="Sort by farm"
-            matInput
-            [matAutocomplete]="autoFarmName"
-          />
-          <mat-autocomplete #autoFarmName="matAutocomplete">
-            <mat-option *ngFor="let option of farmNames" [value]="option">
-              {{ option }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div *ngIf="media.isActive('xs')" fxFlex="1"></div>
+        <div *ngIf="!media.isActive('xs')" fxFlex="15"></div>
+        <div fxLayout="row" fxLayoutGap="5%" fxFlex="70" class="mt-2">
+          <mobile-farm-filter
+            [products]="products"
+            [farmName]="farmName"
+          ></mobile-farm-filter>
 
-        <mat-form-field class="mobile-filter">
-          <input
-            type="text"
-            placeholder="Sort by category"
-            matInput
-            [matAutocomplete]="auto"
-          />
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option
-              *ngFor="let option of categories$ | async"
-              [value]="option.name"
-            >
-              {{ option.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
+          <mobile-product-filter
+            [category]="category"
+            (changeFilter)="productFilter($event)"
+          ></mobile-product-filter>
+        </div>
+        <div fxFlex></div>
       </div>
-      <div fxFlex></div>
-    </div>
     </ng-template>
     <div class="row">
       <ng-container *ngFor="let p of filteredProducts; let i = index">
-        <div class="col" [class.col-4]="filteredProducts.length - i < 3">
-          <product-card [product]="p" [shopping-cart]="cart"></product-card>
-        </div>
-        <div *ngIf="(i + 1) % 3 === 0 && (media.isActive('lg') || media.isActive('xl') || media.isActive('md')) " class="w-100"></div>
-        <div *ngIf="(i + 1) % 2 === 0 && (media.isActive('sm')) " class="w-100"></div>
-        <div *ngIf="(i + 1) % 1 === 0 && (media.isActive('xs')) " class="w-100"></div>
+        <ng-container *ngIf="media.isActive('xs')">
+          <div class="col">
+            <product-card [product]="p" [shopping-cart]="cart"></product-card>
+          </div>
+          <div class="w-100"></div>
+        </ng-container>
+
+        <ng-container *ngIf="media.isActive('sm')">
+          <div class="col" [class.col-6]="filteredProducts.length - i < 2">
+            <product-card [product]="p" [shopping-cart]="cart"></product-card>
+          </div>
+          <div *ngIf="(i + 1) % 2 === 0" class="w-100"></div>
+        </ng-container>
+
+        <ng-container *ngIf="!media.isActive('xs') && !media.isActive('sm')">
+          <div class="col" [class.col-4]="filteredProducts.length - i < 3">
+            <product-card [product]="p" [shopping-cart]="cart"></product-card>
+          </div>
+          <div *ngIf="(i + 1) % 3 === 0" class="w-100"></div>
+        </ng-container>
       </ng-container>
     </div>
   </div>

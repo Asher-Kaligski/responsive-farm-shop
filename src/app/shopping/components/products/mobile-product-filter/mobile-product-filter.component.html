@@ -1,0 +1,16 @@
+<mat-form-field class="mobile-filter">
+  <mat-label>Sort by category</mat-label>
+  <mat-select #categoryValue [(ngModel)]="category">
+    <mat-option #allSelected [value]="0" routerLink="/" value="All Categories">
+      All Categories
+    </mat-option>
+    <mat-option
+      routerLink="/"
+      [queryParams]="{ category: c.name }"
+      *ngFor="let c of categories$ | async"
+      [value]="c.name"
+    >
+      {{ c.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

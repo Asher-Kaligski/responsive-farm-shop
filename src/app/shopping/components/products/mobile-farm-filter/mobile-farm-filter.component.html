@@ -1,0 +1,20 @@
+<mat-form-field class="mobile-filter">
+    <mat-label>Sort by farm</mat-label>
+        <mat-select
+        #farmValue [(ngModel)]="farmName"
+        >
+        <mat-option #allSelected  [value]="0"  routerLink="/" value="All Farms">
+          All Farms
+          
+        </mat-option>
+        
+          <mat-option routerLink="/"
+          [queryParams]="{ farmName: n }" *ngFor="let n of farmNames" [value]="n">
+            {{ n }}
+          </mat-option>
+
+        </mat-select>
+  </mat-form-field>
+
+
+  

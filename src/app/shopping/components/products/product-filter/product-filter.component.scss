@@ -1,8 +1,11 @@
 .sticky-top {
-  top: 60px;
+  top: 0px;
+  margin-bottom: 13px;
+  margin-right: 1.5%;
+  margin-left: 1.5%;
 }
 
-.list-group{
-  display:flex;
+.list-group {
+  display: flex;
   flex-direction: row;
 }
