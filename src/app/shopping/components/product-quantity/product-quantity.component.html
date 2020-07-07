@@ -1,11 +1,33 @@
 <div class="row no-gutters">
-    <div class="col-2">
+  <!-- <div class="col-2">
       <button (click)="removeFromCart()" class="btn btn-secondary btn-block">-</button>
     </div>
-    <div class="col text-center">
+    <div class="col text-center mt-2">
       <div>{{ getQuantity() }} in cart</div>
     </div>
     <div class="col-2">
       <button (click)="addToCart()" class="btn btn-secondary btn-block">+</button>
-    </div>
+    </div> -->
+  <!-- <div class="col-2">
+    <button (click)="removeFromCart()" mat-raised-button class="quantity">
+      -
+    </button>
   </div>
+  <div class="col text-center mt-2 ml-2">
+    <div>{{ getQuantity() }} in cart</div>
+  </div>
+  <div class="col-2">
+    <button (click)="addToCart()" mat-raised-button class="quantity">+</button>
+  </div> -->
+  <div class="col-2">
+    <button (click)="removeFromCart()" mat-raised-button class="quantity">
+      <mat-icon>remove</mat-icon>
+    </button>
+  </div>
+  <div class="col text-center mt-2 ml-2">
+    <div>{{ getQuantity() }} in cart</div>
+  </div>
+  <div class="col-2">
+    <button (click)="addToCart()" mat-raised-button class="quantity"><mat-icon>add</mat-icon></button>
+  </div>
+</div>

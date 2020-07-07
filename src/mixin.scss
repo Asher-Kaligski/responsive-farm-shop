@@ -1,3 +1,19 @@
+@mixin mat-table-columns($columns) {
+  .mat-column- {
+    @each $colName, $props in $columns {
+      $width: map-get($props, "width");
+
+      &#{$colName} {
+        flex: $width;
+        min-width: $width;
+
+        @if map-has-key($props, "color") {
+          color: map-get($props, "color");
+        }
+      }
+    }
+  }
+}
 //@import "~@angular/material/theming";
 // Plus imports for other components in your app.
 

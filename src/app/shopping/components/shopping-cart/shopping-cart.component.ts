@@ -21,6 +21,7 @@ export class ShoppingCartComponent implements OnInit {
 
   displayedColumns: string[] = ['title', 'quantity', 'price', 'totalPrice'];
   dataSource: MatTableDataSource<ShoppingCartItem>;
+  // dataSource: any;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -67,17 +68,29 @@ export class ShoppingCartComponent implements OnInit {
 
     this.cart = await this.cartService.getCart();
     this.dataSource = new MatTableDataSource(this.cart.items);
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
 
     this.subscription = this.cartService
       .getCartChangeEmitter()
       .subscribe((shoppingCart) => {
         this.cart = shoppingCart;
         this.dataSource = new MatTableDataSource(this.cart.items);
-        // this.dataSource.paginator = this.paginator;
-        // this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       });
+
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      if (property === 'title') {
+        return item.product.title;
+      } else if (property === 'price') {
+        return item.product.price;
+      } else if (property === 'totalPrice') {
+        return item.itemTotalPrice;
+      } else {
+        return item[property];
+      }
+    };
   }
 
   applyFilter(event: Event) {
