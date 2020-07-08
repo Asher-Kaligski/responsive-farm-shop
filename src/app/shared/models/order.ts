@@ -2,6 +2,7 @@ import { Shipping } from './shipping';
 import { ShoppingCartItem } from './shopping-cart-item';
 
 export interface Order {
+  orderId: number | null;
   _id: string;
   datePlaced: Date;
   shipping: Shipping;

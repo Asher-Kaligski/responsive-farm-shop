@@ -1,4 +1,4 @@
-<div class="container">
+<!--<div class="container">
   <h1>My Orders</h1>
   <div class="row col-9">
     <table class="table">
@@ -22,4 +22,74 @@
       </tbody>
     </table>
   </div>
+</div>-->
+
+
+<div class="container">
+  <h1 class="text-center my-3">My Orders</h1>
+ 
+<div class="row">
+  <div class="col-md"></div>
+  <div *ngIf="orders.length; else noRecord" class="mat-elevation-z8 col-md-8">
+    <mat-table [dataSource]="dataSource" matSort>
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef> OrderID </mat-header-cell>
+        <mat-cell *matCellDef="let row; index as i">
+          {{i + 1}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Date Placed </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.datePlaced | date : 'short' }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Total </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          {{row.shoppingCart.totalPrice | currency : 'USD': true}}
+        </mat-cell>
+        
+      </ng-container>
+
+      <ng-container matColumnDef="view">
+        <mat-header-cell *matHeaderCellDef > View </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-mini-fab class="fab-preview" [routerLink]="['/view-order/', row._id]"><mat-icon class="icon-preview">preview</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+
+     
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+      
+
+     
+       
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+  <div class="col-md"></div>
+  <ng-template #noRecord>
+    <div class="text-center my-3">
+      You haven't got orders
+     </div>
+   </ng-template>
+  
+  
+</div>
+<div fxLayout="row" fxLayoutAlign="space-evenly center" class="mt-3">
+    
+  <button
+    mat-raised-button
+    
+    color="primary"
+    routerLink="/"
+  >
+    Continue Shopping
+  </button>
+</div>
 </div>

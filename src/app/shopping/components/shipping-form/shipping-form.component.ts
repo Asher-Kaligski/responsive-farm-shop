@@ -32,11 +32,12 @@ export class ShippingFormComponent {
         shoppingCartId: this.cartId,
       };
 
-      const result = await this.orderService.placeOrder(order);
+      await this.orderService.placeOrder(order);
 
       this.toastr.success('The order has been created successfully');
-     // this.router.navigate(['/order-success', result._id]);
+
       this.router.navigate(['/my/orders']);
+
     } catch (err) {
       let { error } = err;
 

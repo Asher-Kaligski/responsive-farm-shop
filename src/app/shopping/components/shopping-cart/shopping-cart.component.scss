@@ -17,6 +17,10 @@
 //   )
 // );
 
+// .mat-elevation-z8{
+//   max-width: 80%;
+// }
+
 mat-footer-row {
   font-weight: bold;
 }
@@ -30,9 +34,7 @@ mat-footer-row {
   width: 100%;
 }
 
-// td, th {
-//   width: 20%;
-// }
+
 
 button {
   width: 150px;
@@ -46,7 +48,6 @@ mat-header-cell,mat-footer-cell, mat-cell {
   border-bottom-color: lightgrey;
 }
 
-/* offsets the header by the same amount of size/padding the sort button occupies */
 .mat-sort-header-container {
   margin-left: 18px;
 }
@@ -59,9 +60,7 @@ mat-header-cell,mat-footer-cell, mat-cell {
   border-bottom-width: 0px;
 }
 
-// table {
-//   width: 100%;
-// }
+
 
 mat-table {
   overflow-x: scroll;

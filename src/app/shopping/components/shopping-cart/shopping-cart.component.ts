@@ -38,19 +38,7 @@ export class ShoppingCartComponent implements OnInit {
   }
   async ngOnInit() {
     this.mediaSub = this.media.media$.subscribe((change: MediaChange) => {
-      // if (
-      //   change.mqAlias !== 'sm' &&
-      //   change.mqAlias !== 'xs' &&
-      //   !this.displayedColumns.includes('imageUrl')
-      // ){
-      //   this.displayedColumns.unshift('imageUrl');
-      // }
-
-      // if (
-      //   (change.mqAlias === 'sm' || change.mqAlias === 'xs') &&
-      //   this.displayedColumns.includes('imageUrl')
-      // )
-      //   this.displayedColumns.shift();
+      
       if (change.mqAlias !== 'sm' && change.mqAlias !== 'xs') {
         if (!this.displayedColumns.includes('imageUrl'))
           this.displayedColumns.unshift('imageUrl');

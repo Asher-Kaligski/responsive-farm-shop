@@ -134,7 +134,7 @@
         <ng-container *ngIf="notes.touched && !notes.valid">
           <mat-error *ngIf="notes.errors.minlength">
             Notes should be minimum
-            {{ postCode.errors.minlength.requiredLength }} characters
+            {{ notes.errors.minlength.requiredLength }} characters
           </mat-error>
           <mat-error *ngIf="notes.errors.maxlength">
             Notes should be maximum
@@ -142,13 +142,14 @@
           </mat-error>
         </ng-container>
       </mat-form-field>
-
+      <div fxLayout="row" fxLayoutAlign="space-evenly center" class="mt-3">
       <button class="mx-1" mat-raised-button color="accent" routerLink="/shopping-cart">
         Cancel
       </button>
       <button class="mx-1" mat-raised-button color="primary" [disabled]="!f.valid">
         Place Order
       </button>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>
