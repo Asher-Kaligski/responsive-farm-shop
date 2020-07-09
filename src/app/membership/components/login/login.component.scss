@@ -1,6 +1,6 @@
 mat-card {
-    max-width: 400px;
-  
+    min-width: 300px;
+    max-width: 450px;
     margin: 2em auto;
   
     text-align: center;
@@ -10,3 +10,9 @@ mat-card {
     display: block;
   }
   
+  .container{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

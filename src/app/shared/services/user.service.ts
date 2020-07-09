@@ -18,7 +18,14 @@ export class UserService extends CrudService{
 
   async create(user) {
     await this.post(user);
+  }
 
+  async getAll(){
+    return await this.get();
+  }
+
+  async updateUser(user, userId){
+    return await this.putById(user, userId);
   }
 
 }

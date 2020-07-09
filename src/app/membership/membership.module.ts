@@ -1,3 +1,4 @@
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -16,6 +17,7 @@ import { MembershipRoutingModule } from './membership-routing.module';
     FormsModule,
     MaterialModule,
     SharedModule,
+    FlexLayoutModule,
     ReactiveFormsModule,
     CustomFormsModule,
     MembershipRoutingModule,

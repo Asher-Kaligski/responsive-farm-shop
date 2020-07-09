@@ -6,6 +6,7 @@ import { ShoppingCartService } from 'shared/services/shopping-cart.service';
 
 import { ProductCardComponent } from './../shopping/components/product-card/product-card.component';
 import { ProductQuantityComponent } from './../shopping/components/product-quantity/product-quantity.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
 import { MaterialModule } from './material.module';
 import { CategoryService } from './services/category.service';
 import { FarmService } from './services/farm.service';
@@ -14,9 +15,9 @@ import { ProductService } from './services/product.service';
 import { UserService } from './services/user.service';
 
 @NgModule({
-  declarations: [ProductCardComponent, ProductQuantityComponent],
+  declarations: [ProductCardComponent, ProductQuantityComponent, UserFormComponent],
   imports: [CommonModule, MaterialModule],
-  exports: [ProductCardComponent, ProductQuantityComponent],
+  exports: [ProductCardComponent, ProductQuantityComponent, UserFormComponent],
   providers: [
     AuthService,
     AuthGuard,
@@ -26,6 +27,7 @@ import { UserService } from './services/user.service';
     ProductService,
     ShoppingCartService,
     FarmService,
+    UserService
   ],
 })
 export class SharedModule {}

@@ -1,3 +1,4 @@
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -23,6 +24,7 @@ import { AdminAuthGuard } from './services/admin-auth-guard.service';
     MaterialModule,
     FormsModule,
     SharedModule,
+    FlexLayoutModule,
     AdminRoutingModule
   ],
 

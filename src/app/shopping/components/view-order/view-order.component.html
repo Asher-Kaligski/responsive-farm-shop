@@ -1,3 +1,8 @@
+<div class="container">
+
+
+  
+
 <mat-card *ngIf="order$ | async as order">
   <mat-card-title>Order Summary</mat-card-title>
   <mat-card-subtitle
@@ -21,3 +26,12 @@
     </ul>
   </mat-card-content>
 </mat-card>
+
+</div>
+
+
+<div fxLayout="row" fxLayoutAlign="space-evenly center" class="mt-3">
+  <button mat-raised-button color="primary" routerLink="/">
+    Continue Shopping
+  </button>
+</div>

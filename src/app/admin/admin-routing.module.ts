@@ -1,3 +1,4 @@
+import { UserFormComponent } from 'shared/components/user-form/user-form.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -12,6 +13,7 @@ const routes: Routes = [
 
   { path: 'admin/products', component: AdminProductsComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/orders', component: AdminOrdersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
+  { path: 'admin/users/:id', component: UserFormComponent, canActivate: [AuthGuard, AdminAuthGuard] },
   { path: 'admin/users', component: AdminUsersComponent, canActivate: [AuthGuard, AdminAuthGuard] },
 ];
 

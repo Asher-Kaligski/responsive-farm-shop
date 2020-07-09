@@ -7,7 +7,7 @@
 </mat-form-field>-->
 <div class="row">
   <div class="col-md"></div>
-  <div *ngIf="cart.items.length; else noRecord" class="mat-elevation-z8 col-md-10">
+  <div  class="mat-elevation-z8 col-md-10">
     <mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="imageUrl">
         <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
@@ -63,14 +63,14 @@
         </mat-footer-cell>
       </ng-container>
 
-      <!-- <ng-container matColumnDef="noRecord">
+       <ng-container matColumnDef="noRecord">
         <mat-footer-cell  *matFooterCellDef>No products found.</mat-footer-cell>
      </ng-container>
 
       
       <ng-template [ngIf]="dataSource.data.length === 0">
         <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
-     </ng-template> -->
+     </ng-template> 
      
 
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -89,11 +89,13 @@
   </div>
   <div class="col-md"></div>
   </div>
-  <ng-template #noRecord>
-    <div class="text-center my-3">
+  <!-- 
+    *ngIf="cart.items.length; else noRecord"
+    <ng-template #noRecord>
+    <div  class="text-center my-3">
       You have {{ cart.items.length }} items in your shopping cart.
      </div>
-   </ng-template>
+   </ng-template> -->
   <div fxLayout="row" fxLayoutAlign="space-evenly center" class="mt-3">
     <button
       mat-raised-button

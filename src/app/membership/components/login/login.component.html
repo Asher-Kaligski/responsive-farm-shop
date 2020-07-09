@@ -1,4 +1,6 @@
-<mat-card>
+<div class="container">
+  
+  <mat-card>
     <mat-card-content>
       <form #f="ngForm" (ngSubmit)="login(f)">
         <h1>Log In</h1>
@@ -10,7 +12,7 @@
         <mat-error *ngIf="!isValid">
           Invalid email or password
         </mat-error>
-  
+
         <mat-form-field class="full-width-input">
           <mat-label>Email</mat-label>
           <input
@@ -21,7 +23,6 @@
             ngModel
             name="email"
             #email="ngModel"
-            placeholder="Email"
             type="email"
           />
           <ng-container *ngIf="email.touched && !email.valid">
@@ -38,7 +39,7 @@
             </mat-error>
           </ng-container>
         </mat-form-field>
-  
+
         <mat-form-field class="full-width-input">
           <mat-label>Password</mat-label>
           <input
@@ -60,11 +61,12 @@
             </mat-error>
           </ng-container>
         </mat-form-field>
-  
+
         <button mat-raised-button color="primary" [disabled]="!f.valid">
           Login
         </button>
       </form>
     </mat-card-content>
   </mat-card>
-  
+
+</div>

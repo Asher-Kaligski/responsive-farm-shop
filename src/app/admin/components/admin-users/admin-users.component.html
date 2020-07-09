@@ -1,1 +1,88 @@
-<p>admin-users works!</p>
+<div class="container">
+  <h1 class="text-center my-3">Users</h1>
+  <div class="row">
+      <div class="col-md"></div>
+      <div class="mat-elevation-z8 col-md-11">
+          
+          <mat-form-field class="mt-2">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input />
+          </mat-form-field>
+
+      <mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> UserID </mat-header-cell>
+          <mat-cell *matCellDef="let row; index as i">
+            {{ i + 1 }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Name
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.firstName + ' '  + row.lastName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Email
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{row.email}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="phone">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Phone
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.phone }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="roles">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Roles
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.roles }}
+          </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            Actions
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button [routerLink]="['/admin/users/', row._id]" mat-mini-fab class="fab-preview"><mat-icon class="icon-preview">edit</mat-icon></button>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="noRecord">
+          <mat-footer-cell *matFooterCellDef>No users found.</mat-footer-cell>
+        </ng-container>
+
+        <ng-template [ngIf]="dataSource.data.length === 0">
+          <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
+        </ng-template>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            No data matching the filter "{{ input.value }}"
+          </td>
+        </tr>
+      </mat-table>
+
+      <mat-paginator [pageSizeOptions]="[6, 12, 25, 100]"></mat-paginator>
+    </div>
+    <div class="col-md"></div>
+  </div>
+</div>
