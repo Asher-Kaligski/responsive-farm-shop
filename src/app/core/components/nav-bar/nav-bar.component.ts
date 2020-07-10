@@ -15,7 +15,6 @@ const { SHOPPING_CART_ID } = StorageKey;
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit, OnDestroy {
-
   cartItemCount: number;
   cart: ShoppingCart;
   shoppingCartId: string;
@@ -35,7 +34,8 @@ export class NavBarComponent implements OnInit, OnDestroy {
       this.cart = await this.cartService.getCartById(this.shoppingCartId);
     }
 
-    this.cartItemCount = this.cart.items.length || 0;
+    if (!this.cart) this.cartItemCount = 0;
+    else this.cartItemCount = this.cart.items.length;
 
     this.subscription = this.cartService
       .getCartChangeEmitter()
