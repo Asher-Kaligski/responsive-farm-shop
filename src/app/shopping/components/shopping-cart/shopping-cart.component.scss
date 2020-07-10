@@ -5,22 +5,6 @@
   background-size: cover;
 }
 
-
-@import '/home/asher/Desktop/MyPortfolioProjects/farm-shop-project/responsive-farm-shop/src/mixin.scss';
-
-// @include mat-table-columns(
-//   (
-//     title: (
-//       width: 5%,
-//       color: black,
-//     )
-//   )
-// );
-
-// .mat-elevation-z8{
-//   max-width: 80%;
-// }
-
 mat-footer-row {
   font-weight: bold;
 }
@@ -34,13 +18,13 @@ mat-footer-row {
   width: 100%;
 }
 
-
-
 button {
   width: 150px;
 }
 
-mat-header-cell,mat-footer-cell, mat-cell {
+mat-header-cell,
+mat-footer-cell,
+mat-cell {
   justify-content: center;
   flex: 0 0 180px;
   border-bottom-width: 1px;
@@ -56,11 +40,10 @@ mat-header-cell,mat-footer-cell, mat-cell {
   color: black;
 }
 
-.mat-row, .mat-header-row {
+.mat-row,
+.mat-header-row {
   border-bottom-width: 0px;
 }
-
-
 
 mat-table {
   overflow-x: scroll;
