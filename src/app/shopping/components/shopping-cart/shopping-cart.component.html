@@ -1,101 +1,91 @@
-
 <div class="container">
   <h1 class="text-center my-3">Shopping Cart</h1>
-  <!--<mat-form-field>
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-</mat-form-field>-->
-<div class="row">
-  <div class="col-md"></div>
-  <div  class="mat-elevation-z8 col-md-10">
-    <mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="imageUrl">
-        <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <div
-            [style.backgroundImage]="'url(' + row.product.imageUrl + ')'"
-            class="thumbnail"
-          ></div>
-        </mat-cell>
-        <mat-footer-cell *matFooterCellDef>
-        Total
-        </mat-footer-cell>
-      </ng-container>
 
-      <ng-container matColumnDef="title">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Product </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{ row.product.title }} </mat-cell>
-        <mat-footer-cell *matFooterCellDef>
-          <span *ngIf="media.isActive('xs') || media.isActive('sm')">Total</span>
-        </mat-footer-cell>
-      </ng-container>
+  <div class="row">
+    <div class="col-md"></div>
+    <div class="mat-elevation-z8 col-md-10">
+      <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="imageUrl">
+          <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <div
+              [style.backgroundImage]="'url(' + row.product.imageUrl + ')'"
+              class="thumbnail"
+            ></div>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef>
+            Total
+          </mat-footer-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="quantity">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <product-quantity
-            [product]="row.product"
-            [shopping-cart]="cart"
-          ></product-quantity>
-        </mat-cell>
-        <mat-footer-cell *matFooterCellDef>
-         
-        </mat-footer-cell>
-      </ng-container>
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Product
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.product.title }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef>
+            <span *ngIf="media.isActive('xs') || media.isActive('sm')"
+              >Total</span
+            >
+          </mat-footer-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="price">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Price </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          {{ row.product.price | currency: "USD":true }}
-        </mat-cell>
-        <mat-footer-cell *matFooterCellDef>
-         
-        </mat-footer-cell>
-      </ng-container>
+        <ng-container matColumnDef="quantity">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Quantity
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <product-quantity
+              [product]="row.product"
+              [shopping-cart]="cart"
+            ></product-quantity>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="totalPrice">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Total Price </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          {{ row.itemTotalPrice | currency: "USD":true }}
-        </mat-cell>
-        <mat-footer-cell *matFooterCellDef>
-          {{ cart.totalPrice | currency: "USD":true }}
-        </mat-footer-cell>
-      </ng-container>
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Price
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.product.price | currency: "USD":true }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
 
-       <ng-container matColumnDef="noRecord">
-        <mat-footer-cell  *matFooterCellDef>No products found.</mat-footer-cell>
-     </ng-container>
+        <ng-container matColumnDef="totalPrice">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Total Price
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.itemTotalPrice | currency: "USD":true }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef>
+            {{ cart.totalPrice | currency: "USD":true }}
+          </mat-footer-cell>
+        </ng-container>
 
-      
-      <ng-template [ngIf]="dataSource.data.length === 0">
-        <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
-     </ng-template> 
-     
+        <ng-container matColumnDef="noRecord">
+          <mat-footer-cell *matFooterCellDef
+            >No products found.</mat-footer-cell
+          >
+        </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        <ng-template [ngIf]="dataSource.data.length === 0">
+          <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
+        </ng-template>
 
-      <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
-      <!-- Row shown when there is no matching data. -->
-      <!-- <tr class="mat-row" *matNoDataRow>
-      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-    </tr> -->
-       
-    </mat-table>
+        <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+      </mat-table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+    <div class="col-md"></div>
   </div>
-  <div class="col-md"></div>
-  </div>
-  <!-- 
-    *ngIf="cart.items.length; else noRecord"
-    <ng-template #noRecord>
-    <div  class="text-center my-3">
-      You have {{ cart.items.length }} items in your shopping cart.
-     </div>
-   </ng-template> -->
+
   <div fxLayout="row" fxLayoutAlign="space-evenly center" class="mt-3">
     <button
       mat-raised-button
@@ -105,12 +95,7 @@
     >
       Check Out
     </button>
-    <button
-      mat-raised-button
-      
-      color="primary"
-      routerLink="/"
-    >
+    <button mat-raised-button color="primary" routerLink="/">
       Continue Shopping
     </button>
   </div>

@@ -12,7 +12,7 @@ export class FarmerAuthGuard {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot){
     const user = this.authService.currentUser;
-    if (user && user.roles.includes('FARM_OWNER')) { return true; }
+    if (user && (user.roles.includes('FARM_OWNER') || user.roles.includes('ADMIN'))) { return true; }
 
     this.router.navigate(['/no-access']);
     return false;

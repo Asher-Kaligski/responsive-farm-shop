@@ -1,3 +1,4 @@
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,10 +22,11 @@ import { FarmerAuthGuard } from './services/farmer-auth-guard.service';
   ],
   imports: [
     CommonModule,
-    FormsModule,
-    RouterModule,
     MaterialModule,
+    FormsModule,
     SharedModule,
+    FlexLayoutModule,
+    RouterModule,
     FarmRoutingModule,
   ],
   exports: [],

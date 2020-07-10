@@ -6,10 +6,10 @@ import { FarmService } from 'shared/services/farm.service';
 import { ProductService } from 'shared/services/product.service';
 
 interface Farm {
-  name: String;
-  phone: String;
+  name: string;
+  phone: string;
   categories: [];
-  _id: String;
+  _id: string;
 }
 
 @Component({

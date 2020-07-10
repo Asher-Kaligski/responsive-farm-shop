@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container mt-5">
   <div class="row">
     <div class="col-md-6">
       <mat-card>
@@ -104,13 +104,19 @@
             </mat-form-field>
 
             <button
+              class="mx-3"
               mat-raised-button
               color="accent"
               routerLink="/farm/products"
             >
               Cancel
             </button>
-            <button mat-raised-button color="primary" [disabled]="!f.valid">
+            <button
+              class="mx-3"
+              mat-raised-button
+              color="primary"
+              [disabled]="!f.valid"
+            >
               Update
             </button>
           </form>
@@ -118,17 +124,29 @@
       </mat-card>
     </div>
     <div class="col-md-6">
-      <mat-card class="preview-card">
-        <mat-card-header>
-          <div mat-card-avatar class="preview-header-image"></div>
-          <mat-card-title>{{ product.title }}</mat-card-title>
-          <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
-        </mat-card-header>
-        <img mat-card-image [src]="product.imageUrl" *ngIf="product.imageUrl" />
-        <mat-card-content>
-          <p>{{ product.price | currency: "USD":true }}</p>
-        </mat-card-content>
-      </mat-card>
+      <div class="product-card">
+        <mat-card class="product-card">
+          <h1>Preview Product</h1>
+          <img
+            mat-card-image
+            [src]="product.imageUrl"
+            alt="{{ product.title }}"
+            height="250vh"
+          />
+
+          <mat-card-content>
+            <p>
+              {{ product.farm.name }}
+            </p>
+            <div>
+              <mat-card-title>{{ product.title }}</mat-card-title>
+              <mat-card-subtitle>{{
+                product.price | currency: "USD":true
+              }}</mat-card-subtitle>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
   </div>
 </div>

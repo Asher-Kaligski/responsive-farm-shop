@@ -10,7 +10,22 @@ mat-form-field {
   display: block;
 }
 
+
+
+.product-card {
+  max-width: 100%;
+  margin-bottom: 30px;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.product-card-img {
+  
+  background-size: cover;
+}
+
 mat-card-title,
-mat-card-subtitle {
+mat-card-subtitle,
+p {
   text-align: center;
 }

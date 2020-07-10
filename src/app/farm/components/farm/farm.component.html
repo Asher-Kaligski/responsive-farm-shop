@@ -1,7 +1,8 @@
-<mat-card *ngIf="farm$ | async as farm">
+<div class="container">
+ <mat-card *ngIf="farm$ | async as farm">
   <mat-card-content>
     <form #f="ngForm" (ngSubmit)="submitOnUpdate(f)">
-      <h1>Update Farm</h1>
+      <h1>Update Farm Details</h1>
 
       <mat-form-field class="full-width-input">
         <mat-label> Farm Name</mat-label>
@@ -62,7 +63,7 @@
           </mat-error>
         </ng-container>
       </mat-form-field>
-      <h1>Choose Product Category</h1>
+      <h2 class="mt-3">Choose Product Category</h2>
       <mat-selection-list
         required
         [(ngModel)]="farm.categories"
@@ -163,3 +164,4 @@
     </form>
   </mat-card-content>
 </mat-card>
+</div>

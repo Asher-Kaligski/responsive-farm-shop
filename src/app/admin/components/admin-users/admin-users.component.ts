@@ -15,10 +15,10 @@ import { User } from './../../../shared/models/user';
 })
 export class AdminUsersComponent implements OnInit {
   users: User[] = [];
- 
+
   displayedColumns: string[] = [
     'id',
-    'name',
+    'firstName',
     'email',
     'phone',
     'roles',
@@ -41,7 +41,6 @@ export class AdminUsersComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.users);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
   }
 
   applyFilter(event: Event) {

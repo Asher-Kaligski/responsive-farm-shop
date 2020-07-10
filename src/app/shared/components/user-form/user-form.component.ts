@@ -1,41 +1,71 @@
+import { AuthService } from './../../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from './../../models/user';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-user-form',
   templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  styleUrls: ['./user-form.component.scss'],
 })
 export class UserFormComponent implements OnInit {
+  user: User;
+  isAdmin = false;
+  userId: string;
+  rolesList: string[] = ['CUSTOMER', 'FARM_OWNER'];
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private toastr: ToastrService,
+    private router: Router,
+    public authService: AuthService
+  ) {}
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    this.userId = this.route.snapshot.paramMap.get('id');
+    this.user = await this.userService.getUserById(this.userId);
+
+    if (this.router.url.includes('admin')) this.isAdmin = true;
+
+    console.log('isAdmin', this.isAdmin);
+    console.log(this.router.url);
+
+    console.log('user', this.user);
   }
 
-  /*
-const schema = Joi.object({
-    firstName: Joi.string()
-      .alphanum()
-      .min(NAME_MIN_LENGTH)
-      .max(NAME_MAX_LENGTH)
-      .required(),
-    lastName: Joi.string()
-      .alphanum()
-      .min(NAME_MIN_LENGTH)
-      .max(NAME_MAX_LENGTH)
-      .required(),
-    phone: Joi.string().min(PHONE_MIN_LENGTH).max(PHONE_MAX_LENGTH).required(),
-    email: Joi.string()
-      .min(EMAIL_MIN_LENGTH)
-      .max(EMAIL_MAX_LENGTH)
-      .email()
-      .required(),
-    password: Joi.string()
-      .pattern(new RegExp('^[a-zA-Z0-9]{8,15}$'))
-      .required(),
-    roles: Joi.array().items(Joi.string()),
-  });
+  async submit(form) {
+    if (!form.valid) return;
+    console.log('form', form.value);
+    try {
+      await this.userService.updateUser(form.value, this.userId);
 
-  */
+      this.toastr.success('User details have been updated successfully');
+
+      if (this.isAdmin) this.router.navigate(['/admin/users']);
+      else {
+        const email = form.value.email;
+        const password = form.value.password;
+        await this.authService.login({ email, password });
+        this.router.navigate(['/']);
+      }
+    } catch (err) {
+      let { error } = err;
+
+      if (!error) {
+        error = err;
+      }
+
+      this.toastr.error(error);
+    }
+  }
+
+  cancel() {
+    if (this.isAdmin) this.router.navigate(['/admin/users']);
+    else this.router.navigate(['/']);
+  }
 
 }

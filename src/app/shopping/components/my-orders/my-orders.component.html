@@ -50,7 +50,7 @@
        </ng-container>
   
         
-        <ng-template [ngIf]="dataSource.data.length === 0">
+        <ng-template [ngIf]="!dataSource || dataSource.data.length === 0">
           <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
        </ng-template> 
 

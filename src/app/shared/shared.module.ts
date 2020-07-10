@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuard } from 'shared/services/auth-guard.service';
 import { AuthService } from 'shared/services/auth.service';
 import { ShoppingCartService } from 'shared/services/shopping-cart.service';
@@ -16,7 +17,7 @@ import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [ProductCardComponent, ProductQuantityComponent, UserFormComponent],
-  imports: [CommonModule, MaterialModule],
+  imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
   exports: [ProductCardComponent, ProductQuantityComponent, UserFormComponent],
   providers: [
     AuthService,

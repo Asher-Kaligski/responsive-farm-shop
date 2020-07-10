@@ -9,7 +9,7 @@
     <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
   </button>
 
-  <button
+  <!-- <button
     mat-button
     [ngClass.gt-sm]="'ml-4'"
     mat-icon-button
@@ -17,7 +17,16 @@
     routerLink="/"
   >
     <mat-icon>storefront</mat-icon>
-  </button>
+  </button> -->
+  
+  <a
+    mat-mini-fab
+    [ngClass.gt-sm]="'ml-4'"
+    class="logo-icon"
+    routerLink="/"
+  >
+    <mat-icon>storefront</mat-icon>
+  </a>
   <span *ngIf="media.isActive('md') || media.isActive('lg')" class="ml-2"
     >Farm Shop</span
   >
@@ -35,9 +44,11 @@
   <ng-template #logged>
     <p class="mt-3">{{ authService.currentUser.firstName }}</p>
 
-    <a mat-button [matMenuTriggerFor]="userProfileMenu"
+    <!-- <a mat-button [matMenuTriggerFor]="userProfileMenu"
       ><div class="user-avatar ml-2"></div
-    ></a>
+    ></a> -->
+    <a mat-mini-fab [matMenuTriggerFor]="userProfileMenu" class="ml-2"
+      ><mat-icon class="icon-avatar">face</mat-icon></a>
   </ng-template>
 
   <a mat-button routerLink="/shopping-cart"
@@ -45,12 +56,11 @@
       >add_shopping_cart</mat-icon
     ></a
   >
-  <!-- [matBadge]="cartItemCount" -->
-  <!-- [ngClass.gt-sm]="'mr-3'" -->
+
 </mat-toolbar>
 
 <mat-menu #userProfileMenu="matMenu">
-  <button
+  <button *ngIf="authService.isLogged()"
     [routerLink]="['/edit-user/', authService.currentUser._id]"
     fxLayout="row"
     fxLayoutAlign="space-between center"
@@ -61,6 +71,7 @@
   </button>
 
   <button
+    *ngIf="authService.isLogged()"
     (click)="authService.logout()"
     fxLayout="row"
     fxLayoutAlign="space-between center"
@@ -95,7 +106,7 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
     <mat-nav-list *ngIf="authService.isLogged()">
-      <a mat-list-item routerLink="/my/orders" (click)="sidenav.toggle()"
+      <a *ngIf="!authService.currentUser.roles.includes('ADMIN')" mat-list-item routerLink="/my/orders" (click)="sidenav.toggle()"
         >My Orders</a
       >
       <ng-container

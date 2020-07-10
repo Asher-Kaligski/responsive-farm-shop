@@ -1,0 +1,59 @@
+.thumbnail {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-size: cover;
+  }
+
+mat-footer-row {
+  font-weight: bold;
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 70%;
+}
+
+button {
+  width: 150px;
+}
+
+mat-header-cell,
+mat-footer-cell,
+mat-cell {
+  justify-content: center;
+  flex: 0 0 190px;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: lightgrey;
+}
+
+.mat-sort-header-container {
+  margin-left: 18px;
+}
+
+.mat-sort-header-sorted {
+  color: black;
+}
+
+.mat-row,
+.mat-header-row {
+  border-bottom-width: 0px;
+}
+
+mat-table {
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+.fab-preview {
+  width: 40px;
+  height: 40px;
+}
+.icon-preview {
+  font-size: 25px;
+}

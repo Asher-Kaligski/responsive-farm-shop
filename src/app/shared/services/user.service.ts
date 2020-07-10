@@ -1,3 +1,4 @@
+import { async } from '@angular/core/testing';
 import { Injectable } from '@angular/core';
 import { CrudService } from '../../core/services/crud.service';
 import { HttpClient } from '@angular/common/http';
@@ -26,6 +27,10 @@ export class UserService extends CrudService{
 
   async updateUser(user, userId){
     return await this.putById(user, userId);
+  }
+
+  async getUserById(userId){
+    return await this.getById(userId);
   }
 
 }

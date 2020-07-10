@@ -1,1 +1,182 @@
-<p>user-form works!</p>
+<div class="container">
+  <mat-card *ngIf="user">
+    <mat-card-content>
+      <form #f="ngForm" (ngSubmit)="submit(f)">
+        <h1>Edit User Profile</h1>
+
+        <mat-form-field class="full-width-input">
+          <mat-label>First Name</mat-label>
+          <input
+            matInput
+            required
+            minlength="2"
+            maxlength="30"
+            [(ngModel)]="user.firstName"
+            name="firstName"
+            #firstName="ngModel"
+            type="firstName"
+          />
+          <ng-container *ngIf="firstName.touched && !firstName.valid">
+            <mat-error *ngIf="firstName.errors.required">
+              First Name is required
+            </mat-error>
+            <mat-error *ngIf="firstName.errors.minlength">
+              First Name should be minimum
+              {{ firstName.errors.minlength.requiredLength }} characters
+            </mat-error>
+            <mat-error *ngIf="firstName.errors.maxlength">
+              First Name should be maximum
+              {{ firstName.errors.maxlength.requiredLength }} characters
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-input">
+          <mat-label>Last Name</mat-label>
+          <input
+            matInput
+            required
+            minlength="2"
+            maxlength="30"
+            [(ngModel)]="user.lastName"
+            name="lastName"
+            #lastName="ngModel"
+            type="lastName"
+          />
+          <ng-container *ngIf="lastName.touched && !lastName.valid">
+            <mat-error *ngIf="lastName.errors.required">
+              Last Name is required
+            </mat-error>
+            <mat-error *ngIf="lastName.errors.minlength">
+              Last Name should be minimum
+              {{ lastName.errors.minlength.requiredLength }} characters
+            </mat-error>
+            <mat-error *ngIf="lastName.errors.maxlength">
+              Last Name should be maximum
+              {{ lastName.errors.maxlength.requiredLength }} characters
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-input">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            required
+            minlength="5"
+            maxlength="255"
+            [(ngModel)]="user.email"
+            name="email"
+            #email="ngModel"
+            type="email"
+          />
+          <ng-container *ngIf="email.touched && !email.valid">
+            <mat-error *ngIf="email.errors.required">
+              Email is required
+            </mat-error>
+            <mat-error *ngIf="email.errors.minlength">
+              Email should be minimum
+              {{ email.errors.minlength.requiredLength }} characters
+            </mat-error>
+            <mat-error *ngIf="email.errors.maxlength">
+              Email should be maximum
+              {{ email.errors.maxlength.requiredLength }} characters
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-input">
+          <mat-label>New Password</mat-label>
+          <input
+            matInput
+            required
+            pattern="^[a-zA-Z0-9]{8,15}$"
+            ngModel
+            name="password"
+            #password="ngModel"
+            type="text"
+            id="password"
+          />
+          <ng-container *ngIf="password.touched && !password.valid">
+            <mat-error *ngIf="password.errors.required">
+              Password is required
+            </mat-error>
+            <mat-error *ngIf="password.errors.pattern">
+              Password doesn't match the pattern
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+
+        <mat-form-field class="full-width-input">
+          <mat-label>Phone Number</mat-label>
+          <input
+            matInput
+            required
+            minlength="5"
+            maxlength="255"
+            [(ngModel)]="user.phone"
+            name="phone"
+            #phone="ngModel"
+            type="phone"
+          />
+          <ng-container *ngIf="phone.touched && !phone.valid">
+            <mat-error *ngIf="phone.errors.required">
+              Phone Number is required
+            </mat-error>
+            <mat-error *ngIf="phone.errors.minlength">
+              Phone Number should be minimum
+              {{ phone.errors.minlength.requiredLength }} characters
+            </mat-error>
+            <mat-error *ngIf="phone.errors.maxlength">
+              Phone Number should be maximum
+              {{ phone.errors.maxlength.requiredLength }} characters
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+        
+        <!-- && !user.roles.includes('ADMIN') -->
+        <mat-form-field *ngIf="isAdmin">
+          <mat-label>Choose Role</mat-label>
+          <mat-select
+            matInput
+            required
+            [(ngModel)]="user.roles"
+            name="roles"
+            #roles="ngModel"
+            multiple
+          >
+            <mat-option *ngFor="let role of rolesList" [value]="role">
+              {{ role }}
+            </mat-option>
+          </mat-select>
+          <ng-container *ngIf="roles.touched && !roles.valid">
+            <mat-error *ngIf="roles.errors.required">
+              Role is required
+            </mat-error>
+          </ng-container>
+        </mat-form-field>
+
+        
+
+        <button
+          type="button"
+          (click)="cancel()"
+          mat-raised-button
+          color="accent"
+          class="mx-3"
+        >
+          Cancel
+        </button>
+
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!f.valid"
+          class="mx-3"
+        >
+          Submit
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
