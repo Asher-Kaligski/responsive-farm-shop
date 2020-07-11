@@ -24,3 +24,15 @@ mat-card-subtitle,
 p {
   text-align: center;
 }
+
+.mat-icon {
+  font-weight: bold;
+}
+
+.quantity {
+  width: 100% !important;
+  min-width: unset !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

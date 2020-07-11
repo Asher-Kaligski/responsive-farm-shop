@@ -20,12 +20,13 @@ export class RegistrationComponent implements OnInit {
   ngOnInit() {}
 
   async submit(form) {
-    try {
-      if (!form.valid) {
-        return;
-      }
+    if (!form.valid) {
+      return;
+    }
 
-      this.userService.create(form.value).then(async (result) => {
+    this.userService
+      .create(form.value)
+      .then(async (result) => {
         const email = form.value.email;
         const password = form.value.password;
 
@@ -34,15 +35,9 @@ export class RegistrationComponent implements OnInit {
         this.toastr.success('The account has been created successfully');
 
         this.router.navigate(['/']);
+      })
+      .catch((err) => {
+        this.toastr.error(err.error);
       });
-    } catch (err) {
-      let { error } = err;
-
-      if (!error) {
-        error = err;
-      }
-
-      this.toastr.error(error);
-    }
   }
 }

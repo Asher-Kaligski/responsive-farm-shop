@@ -4,7 +4,7 @@
   <h1 class="text-center my-3">My Orders</h1>
 
   <div class="row">
-    <div class="col-md"></div>
+    <div  class="col-md"></div>
     <div class="mat-elevation-z8 col-md-8">
       <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
@@ -50,7 +50,7 @@
        </ng-container>
   
         
-        <ng-template [ngIf]="!dataSource || dataSource.data.length === 0">
+        <ng-template *ngIf="!dataSource">
           <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
        </ng-template> 
 
@@ -62,11 +62,11 @@
       <mat-paginator [pageSizeOptions]="[6, 12, 25, 100]"></mat-paginator>
     </div>
      <div class="col-md"></div>
-    <!-- <ng-template #noRecord>
+    <ng-template #noRecord>
       <div class="text-center my-3">
         You haven't got orders
       </div>
-    </ng-template> -->
+    </ng-template>
   </div> 
   <div fxLayout="row" fxLayoutAlign="space-evenly center" class="mt-3">
     <button mat-raised-button color="primary" routerLink="/">

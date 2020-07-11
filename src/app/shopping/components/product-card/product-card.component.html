@@ -13,7 +13,6 @@
       {{ product.farm.name }}
     </p>
     <div>
-      <!-- <div mat-card-avatar class="product-header-image"></div> -->
       <mat-card-title>{{ product.title }}</mat-card-title>
       <mat-card-subtitle>{{
         product.price | currency: "USD":true
@@ -28,12 +27,30 @@
       (click)="addToCart()"
       mat-raised-button
       color="primary"
-      class="btn btn-block"
+      class="btn btn-block p-1"
     >
       Add to Cart
     </button>
     <ng-template #updateQuantity>
       <div class="row no-gutters">
+        <div class="col-2">
+          <button mat-raised-button
+            (click)="removeFromCart()"
+            class="quantity p-1" color="primary"
+          >
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+        <div class="col text-center">
+          <div>{{ getQuantity() }} in cart</div>
+        </div>
+        <div class="col-2">
+          <button mat-raised-button (click)="addToCart()" class="quantity p-1" color="primary">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <!-- <div class="row no-gutters">
         <div class="col-2">
           <button
             (click)="removeFromCart()"
@@ -50,7 +67,7 @@
             +
           </button>
         </div>
-      </div>
+      </div> -->
     </ng-template>
   </mat-card-footer>
 </mat-card>
