@@ -8,7 +8,11 @@
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> OrderID </mat-header-cell>
           <mat-cell *matCellDef="let row; index as i">
-            {{ i + 1 }}
+            {{
+              this.paginator.pageIndex == 0
+                ? i + 1
+                : 1 + i + this.paginator.pageIndex * this.paginator.pageSize
+            }}
           </mat-cell>
         </ng-container>
 
@@ -26,7 +30,7 @@
             Total
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            {{ row.shoppingCart.totalPrice | currency: "USD":true }}
+            ${{ row.shoppingCart.totalPrice }}
           </mat-cell>
         </ng-container>
 

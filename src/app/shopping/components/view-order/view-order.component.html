@@ -12,15 +12,11 @@
           class="list-group-item"
         >
           {{ item.quantity }} * {{ item.product.title }}
-          <div class="float-right">
-            {{ item.itemTotalPrice | currency: "USD":true }}
-          </div>
+          <div class="float-right">${{ item.itemTotalPrice }}</div>
         </li>
         <li class="list-group-item font-weight-bold">
           Total
-          <div class="float-right">
-            {{ order.shoppingCart.totalPrice | currency: "USD":true }}
-          </div>
+          <div class="float-right">$ {{ order.shoppingCart.totalPrice }}</div>
         </li>
       </ul>
     </mat-card-content>

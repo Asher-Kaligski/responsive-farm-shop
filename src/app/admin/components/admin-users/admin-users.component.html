@@ -15,9 +15,9 @@
 
       <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef> UserID </mat-header-cell>
-          <mat-cell *matCellDef="let row; index as i">
-            {{ i + 1 }}
+          <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ dataSource.filteredData.indexOf(row) + 1 }}
           </mat-cell>
         </ng-container>
 

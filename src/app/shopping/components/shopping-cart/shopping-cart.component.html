@@ -47,9 +47,7 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Price
           </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            {{ row.product.price | currency: "USD":true }}
-          </mat-cell>
+          <mat-cell *matCellDef="let row"> ${{ row.product.price }} </mat-cell>
           <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
         </ng-container>
 
@@ -57,11 +55,9 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Total Price
           </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            {{ row.itemTotalPrice | currency: "USD":true }}
-          </mat-cell>
+          <mat-cell *matCellDef="let row"> ${{ row.itemTotalPrice }} </mat-cell>
           <mat-footer-cell *matFooterCellDef>
-            {{ cart.totalPrice | currency: "USD":true }}
+            ${{ cart.totalPrice }}
           </mat-footer-cell>
         </ng-container>
 

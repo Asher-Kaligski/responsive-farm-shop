@@ -16,12 +16,12 @@
 
       <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef> OrderID </mat-header-cell>
-          <mat-cell *matCellDef="let row; index as i">
-            {{ i + 1 }}
+          <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ dataSource.filteredData.indexOf(row) + 1 }}
           </mat-cell>
         </ng-container>
-       
+
         <ng-container matColumnDef="datePlaced">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Date Placed
@@ -30,13 +30,13 @@
             {{ row.datePlaced | date: "short" }}
           </mat-cell>
         </ng-container>
-        
+
         <ng-container matColumnDef="total">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Total
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            {{ row.shoppingCart.totalPrice | currency: "USD":true }}
+            ${{ row.shoppingCart.totalPrice }}
           </mat-cell>
         </ng-container>
 
@@ -45,7 +45,7 @@
             User Name
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            {{ row.customer.firstName + ' ' + row.customer.lastName }}
+            {{ row.customer.firstName + " " + row.customer.lastName }}
           </mat-cell>
         </ng-container>
 
@@ -54,7 +54,7 @@
             Phone
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            {{ row.customer.phone}}
+            {{ row.customer.phone }}
           </mat-cell>
         </ng-container>
 
@@ -82,7 +82,6 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
-        <!-- Row shown when there is no matching data. -->
         <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell" colspan="4">
             No data matching the filter "{{ input.value }}"
