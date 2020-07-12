@@ -63,6 +63,9 @@ export class FarmProductsComponent implements OnInit {
       const index = this.products.indexOf(product);
       if (index !== -1) {
         this.products.splice(index, 1);
+        this.dataSource = new MatTableDataSource(this.products);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }
       this.toastr.success(
         `The product '${res.title}' has been deleted successfully`

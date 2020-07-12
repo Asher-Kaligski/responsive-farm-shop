@@ -149,11 +149,16 @@
           </ng-container>
         </mat-form-field>
         <h1>Choose Product Category</h1>
-        <mat-select required ngModel name="categories" #categories="ngModel">
-          <mat-option *ngFor="let c of items" [value]="c">
-            {{ c }}
-          </mat-option>
-        </mat-select>
+         <mat-selection-list
+          required
+          ngModel
+          name="categories"
+          #categories="ngModel"
+        >
+          <mat-list-option *ngFor="let c of items" [value]="c.name">
+            {{ c.name }}
+          </mat-list-option>
+        </mat-selection-list>
 
         <button mat-raised-button color="accent" routerLink="/">
           Cancel

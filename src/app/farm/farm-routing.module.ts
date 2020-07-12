@@ -10,7 +10,7 @@ import { FarmerAuthGuard } from './services/farmer-auth-guard.service';
 
 const routes: Routes = [
   {
-    path: 'farm/farm',
+    path: 'farm/update-farm',
     component: FarmComponent,
     canActivate: [AuthGuard, FarmerAuthGuard],
   },

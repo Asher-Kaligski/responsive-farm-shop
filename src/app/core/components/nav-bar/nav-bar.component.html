@@ -105,7 +105,7 @@
       <ng-container
         *ngIf="authService.currentUser.roles.includes('FARM_OWNER')"
       >
-        <a mat-list-item routerLink="/farm/farm" (click)="sidenav.toggle()"
+        <a mat-list-item routerLink="/farm/update-farm" (click)="sidenav.toggle()"
           >Farm Details</a
         >
         <a mat-list-item routerLink="/farm/products" (click)="sidenav.toggle()"

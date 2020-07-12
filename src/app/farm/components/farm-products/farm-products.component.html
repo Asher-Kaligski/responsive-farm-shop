@@ -14,6 +14,7 @@
           />
         </mat-form-field>
         <button
+          disabled="{{!products}}"
           routerLink="new"
           mat-raised-button
           color="primary"
@@ -94,7 +95,7 @@
           <mat-footer-cell *matFooterCellDef>No users found.</mat-footer-cell>
         </ng-container>
 
-        <ng-template [ngIf]="dataSource.data.length === 0">
+        <ng-template *ngIf="!dataSource"> 
           <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
         </ng-template>
 
