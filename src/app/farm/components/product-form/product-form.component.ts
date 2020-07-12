@@ -55,8 +55,8 @@ export class ProductFormComponent {
       );
 
       this.router.navigate(['/farm/products']);
-    } catch (error) {
-      this.toastr.error('Unable to create product', error);
+    } catch (err) {
+      this.toastr.error('Unable to create product', err.error);
     }
   }
 }
