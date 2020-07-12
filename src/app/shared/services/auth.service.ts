@@ -37,7 +37,9 @@ export class AuthService extends CrudService {
   }
 
   get currentUser() {
-    if (!this.token) { return null; }
+    if (!this.token) {
+      return null;
+    }
 
     const helper = new JwtHelperService();
     const decodedToken = helper.decodeToken(this.token);
@@ -59,4 +61,3 @@ export class AuthService extends CrudService {
     return this.token.length > 0;
   }
 }
-

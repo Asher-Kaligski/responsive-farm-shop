@@ -24,4 +24,3 @@ export class FarmService extends CrudService {
     return await this.getById('farmOwner/' + farmOwnerId);
   }
 }
-

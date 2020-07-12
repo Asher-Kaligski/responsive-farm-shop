@@ -16,11 +16,12 @@
     >
       {{ c.name }}
     </a>
-        <input
-        class="list-group-item"
-   #query
-   (keyup)="filter(query.value)"
-  type="text"
-   placeholder="Search Product">
+    <input
+      class="list-group-item"
+      #query
+      (keyup)="filter(query.value)"
+      type="text"
+      placeholder="Search Product"
+    />
   </div>
 </div>

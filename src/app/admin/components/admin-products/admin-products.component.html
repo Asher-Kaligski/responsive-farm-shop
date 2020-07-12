@@ -1,120 +1,113 @@
-
-
 <div class="container">
-  
-    <h1 class="text-center my-3">Products</h1>
-    <div class="row">
-      <div class="col-md"></div>
-      <div class="mat-elevation-z8 col-md-11">
-       
-        
-        <mat-form-field class="mt-2">
-          
-          <mat-label>Filter</mat-label>
-          <input
-            matInput
-            (keyup)="applyFilter($event)"
-            placeholder="Filter"
-            #input
-          />
-        </mat-form-field>
-       
-        <mat-table [dataSource]="dataSource" matSort>
-          <ng-container matColumnDef="id">
-            <mat-header-cell *matHeaderCellDef> ProductID </mat-header-cell>
-            <mat-cell *matCellDef="let row; index as i">
-              {{ i + 1 }}
-            </mat-cell>
-          </ng-container>
-  
-          <ng-container matColumnDef="title">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Title
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.title }} </mat-cell>
-          </ng-container>
+  <h1 class="text-center my-3">Products</h1>
+  <div class="row">
+    <div class="col-md"></div>
+    <div class="mat-elevation-z8 col-md-11">
+      <mat-form-field class="mt-2">
+        <mat-label>Filter</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Filter"
+          #input
+        />
+      </mat-form-field>
 
-          <ng-container matColumnDef="farmName">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Title
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.farm.name }} </mat-cell>
-          </ng-container>
-  
-          <ng-container matColumnDef="category">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Category
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              {{ row.category }}
-            </mat-cell>
-          </ng-container>
-  
-          <ng-container matColumnDef="price">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Price
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              {{ row.price | currency: "USD":true }}
-            </mat-cell>
-          </ng-container>
-  
-          <ng-container matColumnDef="imageUrl">
-            <mat-header-cell *matHeaderCellDef>
-              Image
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <div
-                [style.backgroundImage]="'url(' + row.imageUrl + ')'"
-                class="thumbnail"
-              ></div>
-            </mat-cell>
-          </ng-container>
-  
-          <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef>
-              Actions
-            </mat-header-cell>
-            <mat-cell *matCellDef="let row">
-              <button
-                [routerLink]="['/farm/products', row._id]"
-                mat-mini-fab
-                class="fab-preview mr-2"
-              >
-                <mat-icon class="icon-preview">edit</mat-icon>
-              </button>
-              <button
-                (click)="delete(row)"
-                mat-mini-fab
-                class="fab-preview"
-                color="warn"
-              >
-                <mat-icon class="icon-preview">delete</mat-icon>
-              </button>
-            </mat-cell>
-          </ng-container>
-  
-          <ng-container matColumnDef="noRecord">
-            <mat-footer-cell *matFooterCellDef>No users found.</mat-footer-cell>
-          </ng-container>
-  
-          <ng-template [ngIf]="dataSource.data.length === 0">
-            <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
-          </ng-template>
-  
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-  
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">
-              No data matching the filter "{{ input.value }}"
-            </td>
-          </tr>
-        </mat-table>
-  
-        <mat-paginator [pageSizeOptions]="[6, 12, 25, 100]"></mat-paginator>
-      </div>
-      <div class="col-md"></div>
+      <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> ProductID </mat-header-cell>
+          <mat-cell *matCellDef="let row; index as i">
+            {{ i + 1 }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Title
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.title }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="farmName">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Title
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.farm.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Category
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.category }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Price
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.price | currency: "USD":true }}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="imageUrl">
+          <mat-header-cell *matHeaderCellDef>
+            Image
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <div
+              [style.backgroundImage]="'url(' + row.imageUrl + ')'"
+              class="thumbnail"
+            ></div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            Actions
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button
+              [routerLink]="['/farm/products', row._id]"
+              mat-mini-fab
+              class="fab-preview mr-2"
+            >
+              <mat-icon class="icon-preview">edit</mat-icon>
+            </button>
+            <button
+              (click)="delete(row)"
+              mat-mini-fab
+              class="fab-preview"
+              color="warn"
+            >
+              <mat-icon class="icon-preview">delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="noRecord">
+          <mat-footer-cell *matFooterCellDef>No users found.</mat-footer-cell>
+        </ng-container>
+
+        <ng-template [ngIf]="dataSource.data.length === 0">
+          <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
+        </ng-template>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">
+            No data matching the filter "{{ input.value }}"
+          </td>
+        </tr>
+      </mat-table>
+
+      <mat-paginator [pageSizeOptions]="[6, 12, 25, 100]"></mat-paginator>
     </div>
+    <div class="col-md"></div>
   </div>
-  
+</div>

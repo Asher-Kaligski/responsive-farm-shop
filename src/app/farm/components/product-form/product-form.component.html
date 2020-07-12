@@ -111,9 +111,12 @@
             >
               Cancel
             </button>
-            <button 
-            class="mx-3"
-            mat-raised-button color="primary" [disabled]="!f.valid">
+            <button
+              class="mx-3"
+              mat-raised-button
+              color="primary"
+              [disabled]="!f.valid"
+            >
               Save
             </button>
           </form>
@@ -122,16 +125,16 @@
     </div>
 
     <div class="col-md-6">
-      
       <div class="product-card">
         <mat-card class="product-card">
           <h1>Preview Product</h1>
-          <img *ngIf="imageUrl.value"
+          <img
+            *ngIf="imageUrl.value"
             mat-card-image
             [src]="imageUrl.value"
             height="250vh"
           />
-         
+
           <mat-card-content>
             <p *ngIf="farm$ | async as farm">
               {{ farm.name }}
@@ -144,7 +147,7 @@
             </div>
           </mat-card-content>
         </mat-card>
-        </div>
+      </div>
     </div>
   </div>
 </div>

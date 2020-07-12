@@ -1,36 +1,31 @@
-import { async } from '@angular/core/testing';
-import { Injectable } from '@angular/core';
-import { CrudService } from '../../core/services/crud.service';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-
+import { CrudService } from '../../core/services/crud.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class UserService extends CrudService{
-
+export class UserService extends CrudService {
   endpoint = 'users';
 
   constructor(http: HttpClient) {
     super(http);
   }
 
-
   async create(user) {
     await this.post(user);
   }
 
-  async getAll(){
+  async getAll() {
     return await this.get();
   }
 
-  async updateUser(user, userId){
+  async updateUser(user, userId) {
     return await this.putById(user, userId);
   }
 
-  async getUserById(userId){
+  async getUserById(userId) {
     return await this.getById(userId);
   }
-
 }

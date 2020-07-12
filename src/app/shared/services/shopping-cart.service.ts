@@ -47,7 +47,9 @@ export class ShoppingCartService extends CrudService {
 
   private async getOrCreateCartId(): Promise<string> {
     const cartId = this.storageService.read(SHOPPING_CART_ID);
-    if (cartId) { return cartId; }
+    if (cartId) {
+      return cartId;
+    }
 
     const shoppingCart = await this.create();
 

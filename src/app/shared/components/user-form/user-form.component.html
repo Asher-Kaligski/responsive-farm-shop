@@ -133,8 +133,7 @@
             </mat-error>
           </ng-container>
         </mat-form-field>
-        
-        <!-- && !user.roles.includes('ADMIN') -->
+
         <mat-form-field *ngIf="isAdmin">
           <mat-label>Choose Role</mat-label>
           <mat-select
@@ -155,8 +154,6 @@
             </mat-error>
           </ng-container>
         </mat-form-field>
-
-        
 
         <button
           type="button"

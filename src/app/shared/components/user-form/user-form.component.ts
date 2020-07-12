@@ -1,10 +1,10 @@
-import { AuthService } from './../../services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { User } from './../../models/user';
-import { ToastrService } from 'ngx-toastr';
-import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
+import { User } from './../../models/user';
+import { AuthService } from './../../services/auth.service';
+import { UserService } from './../../services/user.service';
 
 @Component({
   selector: 'app-user-form',
@@ -30,11 +30,6 @@ export class UserFormComponent implements OnInit {
     this.user = await this.userService.getUserById(this.userId);
 
     if (this.router.url.includes('admin')) this.isAdmin = true;
-
-    console.log('isAdmin', this.isAdmin);
-    console.log(this.router.url);
-
-    console.log('user', this.user);
   }
 
   async submit(form) {
@@ -67,5 +62,4 @@ export class UserFormComponent implements OnInit {
     if (this.isAdmin) this.router.navigate(['/admin/users']);
     else this.router.navigate(['/']);
   }
-
 }

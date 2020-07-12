@@ -1,5 +1,4 @@
 <mat-toolbar color="primary">
-  <!--fxHide fxShow.lt-sm-->
   <button
     *ngIf="authService.isLogged()"
     mat-icon-button
@@ -9,22 +8,7 @@
     <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
   </button>
 
-  <!-- <button
-    mat-button
-    [ngClass.gt-sm]="'ml-4'"
-    mat-icon-button
-    class="logo-icon"
-    routerLink="/"
-  >
-    <mat-icon>storefront</mat-icon>
-  </button> -->
-  
-  <a
-    mat-mini-fab
-    [ngClass.gt-sm]="'ml-4'"
-    class="logo-icon"
-    routerLink="/"
-  >
+  <a mat-mini-fab [ngClass.gt-sm]="'ml-4'" class="logo-icon" routerLink="/" color="primary">
     <mat-icon>storefront</mat-icon>
   </a>
   <span *ngIf="media.isActive('md') || media.isActive('lg')" class="ml-2"
@@ -47,8 +31,13 @@
     <!-- <a mat-button [matMenuTriggerFor]="userProfileMenu"
       ><div class="user-avatar ml-2"></div
     ></a> -->
-    <a mat-mini-fab [matMenuTriggerFor]="userProfileMenu" class="ml-2"
-      ><mat-icon class="icon-avatar">face</mat-icon></a>
+    <a
+      mat-mini-fab
+      [matMenuTriggerFor]="userProfileMenu"
+      class="ml-2"
+      color="primary"
+      ><mat-icon class="icon-avatar">face</mat-icon></a
+    >
   </ng-template>
 
   <a mat-button routerLink="/shopping-cart"
@@ -56,11 +45,11 @@
       >add_shopping_cart</mat-icon
     ></a
   >
-
 </mat-toolbar>
 
 <mat-menu #userProfileMenu="matMenu">
-  <button *ngIf="authService.isLogged()"
+  <button
+    *ngIf="authService.isLogged()"
     [routerLink]="['/edit-user/', authService.currentUser._id]"
     fxLayout="row"
     fxLayoutAlign="space-between center"
@@ -106,7 +95,11 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
     <mat-nav-list *ngIf="authService.isLogged()">
-      <a *ngIf="!authService.currentUser.roles.includes('ADMIN')" mat-list-item routerLink="/my/orders" (click)="sidenav.toggle()"
+      <a
+        *ngIf="!authService.currentUser.roles.includes('ADMIN')"
+        mat-list-item
+        routerLink="/my/orders"
+        (click)="sidenav.toggle()"
         >My Orders</a
       >
       <ng-container

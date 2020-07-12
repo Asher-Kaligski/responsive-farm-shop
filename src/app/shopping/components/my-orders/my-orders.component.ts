@@ -14,7 +14,6 @@ export class MyOrdersComponent implements OnInit {
   orders: Order[] = [];
   displayedColumns: string[] = ['id', 'date', 'total', 'view'];
   dataSource: MatTableDataSource<Order>;
-  
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

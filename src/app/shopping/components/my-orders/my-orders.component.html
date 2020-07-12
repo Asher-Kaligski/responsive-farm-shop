@@ -1,10 +1,8 @@
-
-
 <div class="container">
   <h1 class="text-center my-3">My Orders</h1>
 
   <div class="row">
-    <div  class="col-md"></div>
+    <div class="col-md"></div>
     <div class="mat-elevation-z8 col-md-8">
       <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
@@ -46,28 +44,26 @@
         </ng-container>
 
         <ng-container matColumnDef="noRecord">
-          <mat-footer-cell  *matFooterCellDef>No orders found.</mat-footer-cell>
-       </ng-container>
-  
-        
+          <mat-footer-cell *matFooterCellDef>No orders found.</mat-footer-cell>
+        </ng-container>
+
         <ng-template *ngIf="!dataSource">
           <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
-       </ng-template> 
+        </ng-template>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-        
       </mat-table>
 
-      <mat-paginator [pageSizeOptions]="[6, 12, 25, 100]"></mat-paginator>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
-     <div class="col-md"></div>
+    <div class="col-md"></div>
     <ng-template #noRecord>
       <div class="text-center my-3">
         You haven't got orders
       </div>
     </ng-template>
-  </div> 
+  </div>
   <div fxLayout="row" fxLayoutAlign="space-evenly center" class="mt-3">
     <button mat-raised-button color="primary" routerLink="/">
       Continue Shopping

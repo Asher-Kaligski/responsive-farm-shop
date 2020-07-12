@@ -26,7 +26,9 @@ export class ProductCardComponent implements OnInit {
   ngOnInit(): void {}
 
   getQuantity() {
-    if (!this.shoppingCart) { return 0; }
+    if (!this.shoppingCart) {
+      return 0;
+    }
 
     const item = this.shoppingCart.items.find(
       (item) => item.product._id == this.product._id
@@ -46,7 +48,9 @@ export class ProductCardComponent implements OnInit {
     } catch (err) {
       let { error } = err;
 
-      if (!error) { error = err; }
+      if (!error) {
+        error = err;
+      }
 
       this.toastr.error(error);
     }

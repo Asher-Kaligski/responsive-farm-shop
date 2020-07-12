@@ -22,7 +22,9 @@ export class LoginComponent {
     try {
       await this.authService.login(form.value);
 
-      if (!this.authService.isLogged()) { this.router.navigate(['/login']); }
+      if (!this.authService.isLogged()) {
+        this.router.navigate(['/login']);
+      }
 
       const returnUrl = this.activatedRoute.snapshot.queryParamMap.get(
         'returnUrl'

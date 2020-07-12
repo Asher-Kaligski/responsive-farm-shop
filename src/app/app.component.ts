@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  OnDestroy,
-  OnInit,
-  ChangeDetectorRef,
-} from '@angular/core';
-import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -13,32 +6,12 @@ import { Subscription } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AppComponent implements OnInit {
   title = 'responsive-farm-shop';
   subscription: Subscription;
   deviceXs: boolean;
 
-  constructor(
-    public mediaObserver: MediaObserver,
-    private cdRef: ChangeDetectorRef
-  ) {}
+  constructor() {}
 
-  ngOnInit() {
-    // tslint:disable-next-line: deprecation
-    this.subscription = this.mediaObserver.media$.subscribe(
-      (change: MediaChange) => {
-        console.log(change.mqAlias);
-        // console.log(change.mediaQuery);
-        this.deviceXs = change.mqAlias === 'xs' ? true : false;
-      }
-    );
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  ngAfterViewInit() {
-    this.cdRef.detectChanges();
-  }
+  ngOnInit() {}
 }

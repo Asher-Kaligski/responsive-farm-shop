@@ -6,7 +6,6 @@ import { NoAccessComponent } from './components/no-access/no-access.component';
 
 const routes: Routes = [
   { path: '', component: ProductsComponent },
-
   { path: 'no-access', component: NoAccessComponent },
 ];
 

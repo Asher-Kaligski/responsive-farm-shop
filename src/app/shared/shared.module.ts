@@ -16,7 +16,11 @@ import { ProductService } from './services/product.service';
 import { UserService } from './services/user.service';
 
 @NgModule({
-  declarations: [ProductCardComponent, ProductQuantityComponent, UserFormComponent],
+  declarations: [
+    ProductCardComponent,
+    ProductQuantityComponent,
+    UserFormComponent,
+  ],
   imports: [CommonModule, MaterialModule, FormsModule, ReactiveFormsModule],
   exports: [ProductCardComponent, ProductQuantityComponent, UserFormComponent],
   providers: [
@@ -28,7 +32,7 @@ import { UserService } from './services/user.service';
     ProductService,
     ShoppingCartService,
     FarmService,
-    UserService
+    UserService,
   ],
 })
 export class SharedModule {}

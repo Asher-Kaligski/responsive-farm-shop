@@ -1,9 +1,8 @@
-import { MediaObserver } from '@angular/flex-layout';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MediaObserver } from '@angular/flex-layout';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'shared/services/user.service';
 
 import { User } from './../../../shared/models/user';
@@ -31,7 +30,6 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private toastr: ToastrService,
     public media: MediaObserver
   ) {}
 

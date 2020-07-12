@@ -21,7 +21,6 @@ export class ShoppingCartComponent implements OnInit {
 
   displayedColumns: string[] = ['title', 'quantity', 'price', 'totalPrice'];
   dataSource: MatTableDataSource<ShoppingCartItem>;
-  // dataSource: any;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;

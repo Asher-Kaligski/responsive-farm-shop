@@ -1,15 +1,16 @@
 mat-card {
-    max-width: 95%;
-    
-    margin: 2em auto;
-  
-    text-align: center;
-  }
-  
-  mat-form-field {
-    display: block;
-  }
+  max-width: 95%;
 
-  mat-card-title, mat-card-subtitle{
-    text-align: center;
-  }
+  margin: 2em auto;
+
+  text-align: center;
+}
+
+mat-form-field {
+  display: block;
+}
+
+mat-card-title,
+mat-card-subtitle {
+  text-align: center;
+}

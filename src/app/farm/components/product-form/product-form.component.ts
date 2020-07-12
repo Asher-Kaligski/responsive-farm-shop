@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'shared/services/auth.service';
 import { FarmService } from 'shared/services/farm.service';
@@ -26,7 +26,6 @@ export class ProductFormComponent {
     private farmService: FarmService,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
     private toastr: ToastrService
   ) {
     this.farm$ = this.farmService.getByFarmOwner(
@@ -40,7 +39,9 @@ export class ProductFormComponent {
 
   async save(form) {
     let result: any;
-    if (!form.valid) { return; }
+    if (!form.valid) {
+      return;
+    }
 
     try {
       const farm = await this.farm$;

@@ -1,8 +1,7 @@
-import { MatSort } from '@angular/material/sort';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from 'shared/models/product';
 import { AuthService } from 'shared/services/auth.service';
@@ -32,7 +31,6 @@ export class FarmProductsComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private authService: AuthService,
-    private router: Router,
     private toastr: ToastrService
   ) {}
 

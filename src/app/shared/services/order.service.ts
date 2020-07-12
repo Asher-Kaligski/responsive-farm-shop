@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Order } from 'shared/models/order';
 import { StorageKey } from 'shared/models/storage.model';
 import { ShoppingCartService } from 'shared/services/shopping-cart.service';
@@ -17,7 +18,8 @@ export class OrderService extends CrudService {
   constructor(
     http: HttpClient,
     private storageService: StorageService,
-    private cartService: ShoppingCartService
+    private cartService: ShoppingCartService,
+    private toastr: ToastrService
   ) {
     super(http);
   }
@@ -31,8 +33,8 @@ export class OrderService extends CrudService {
       await this.cartService.getCart();
 
       return result;
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      this.toastr.error(err.error);
     }
   }
 
@@ -40,4 +42,3 @@ export class OrderService extends CrudService {
     return await this.get();
   }
 }
-

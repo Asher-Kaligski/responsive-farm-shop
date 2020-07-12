@@ -37,7 +37,6 @@ export class ShippingFormComponent {
       this.toastr.success('The order has been created successfully');
 
       this.router.navigate(['/my/orders']);
-
     } catch (err) {
       let { error } = err;
 

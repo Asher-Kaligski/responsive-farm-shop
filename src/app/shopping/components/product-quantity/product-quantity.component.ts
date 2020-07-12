@@ -24,10 +24,12 @@ export class ProductQuantityComponent {
   ) {}
 
   getQuantity() {
-    if (!this.shoppingCart) { return 0; }
+    if (!this.shoppingCart) {
+      return 0;
+    }
 
     const item = this.shoppingCart.items.find(
-      (item) => item.product._id == this.product._id
+      (item) => item.product._id === this.product._id
     );
     return item ? item.quantity : 0;
   }
@@ -44,7 +46,9 @@ export class ProductQuantityComponent {
     } catch (err) {
       let { error } = err;
 
-      if (!error) { error = err; }
+      if (!error) {
+        error = err;
+      }
 
       this.toastr.error(error);
     }

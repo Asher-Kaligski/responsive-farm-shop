@@ -40,12 +40,16 @@ export class EditProductComponent {
     });
 
     const id = this.route.snapshot.paramMap.get('id');
-    if (id) { this.productService.getProduct(id).then((p) => (this.product = p)); }
+    if (id) {
+      this.productService.getProduct(id).then((p) => (this.product = p));
+    }
   }
 
   async save(form) {
     let result: any;
-    if (!form.valid) { return; }
+    if (!form.valid) {
+      return;
+    }
 
     try {
       form.value.farmId = this.product.farm._id;

@@ -1,6 +1,6 @@
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 
 import { MaterialModule } from './../shared/material.module';
@@ -10,8 +10,6 @@ import { AdminOrdersComponent } from './components/admin-orders/admin-orders.com
 import { AdminProductsComponent } from './components/admin-products/admin-products.component';
 import { AdminUsersComponent } from './components/admin-users/admin-users.component';
 import { AdminAuthGuard } from './services/admin-auth-guard.service';
-
-
 
 @NgModule({
   declarations: [
@@ -25,9 +23,9 @@ import { AdminAuthGuard } from './services/admin-auth-guard.service';
     FormsModule,
     SharedModule,
     FlexLayoutModule,
-    AdminRoutingModule
+    AdminRoutingModule,
   ],
 
-  providers: [AdminAuthGuard]
+  providers: [AdminAuthGuard],
 })
-export class AdminModule { }
+export class AdminModule {}

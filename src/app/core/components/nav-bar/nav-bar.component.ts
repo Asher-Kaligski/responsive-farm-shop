@@ -1,8 +1,8 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
-import { StorageKey } from 'shared/models/storage.model';
 import { Subscription } from 'rxjs';
 import { ShoppingCart } from 'shared/models/shopping-cart';
+import { StorageKey } from 'shared/models/storage.model';
 import { AuthService } from 'shared/services/auth.service';
 import { ShoppingCartService } from 'shared/services/shopping-cart.service';
 import { StorageService } from 'shared/services/storage.service';

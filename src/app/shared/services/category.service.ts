@@ -17,4 +17,3 @@ export class CategoryService extends CrudService {
     return await this.get();
   }
 }
-

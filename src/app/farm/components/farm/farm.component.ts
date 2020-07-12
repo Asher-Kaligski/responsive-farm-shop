@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'shared/services/auth.service';
 import { CategoryService } from 'shared/services/category.service';
 import { FarmService } from 'shared/services/farm.service';
 
 interface Farm {
-  name: String;
-  phone: String;
+  name: string;
+  phone: string;
   categories: [];
-  _id?: String;
+  _id?: string;
 }
 
 @Component({
@@ -24,7 +25,8 @@ export class FarmComponent implements OnInit {
     private categoryService: CategoryService,
     private farmService: FarmService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -35,12 +37,14 @@ export class FarmComponent implements OnInit {
     this.categoryService
       .getAll()
       .then((res) => (this.items = res))
-      .catch((err) => console.error(err.error));
+      .catch((err) => this.toastr.error(err.error));
   }
 
   async submitOnCreate(form) {
     let result: any;
-    if (!form.valid) { return; }
+    if (!form.valid) {
+      return;
+    }
 
     try {
       form.value.farmOwnerId = this.authService.currentUser._id;
@@ -48,15 +52,17 @@ export class FarmComponent implements OnInit {
       result = await this.farmService.create(form.value);
 
       this.router.navigate(['/farm/products']);
-      console.log(result);
-    } catch (error) {
-      console.error('Error to create farm', error);
+      this.toastr.success('The farm has been created successfully.');
+    } catch (err) {
+      this.toastr.error(err.error);
     }
   }
 
   async submitOnUpdate(form) {
     let result: any;
-    if (!form.valid) { return; }
+    if (!form.valid) {
+      return;
+    }
 
     try {
       const farm = await this.farm$;
@@ -66,8 +72,9 @@ export class FarmComponent implements OnInit {
       result = await this.farmService.update(form.value, farm._id);
 
       this.router.navigate(['/']);
-    } catch (error) {
-      console.error('Error to create farm', error);
+      this.toastr.success('The farm has been updated successfully.');
+    } catch (err) {
+      this.toastr.error(err.error);
     }
   }
 }
