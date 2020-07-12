@@ -107,7 +107,11 @@
               class="mx-3"
               mat-raised-button
               color="accent"
-              routerLink="/farm/products"
+              [routerLink]="
+                authService.currentUser.roles.includes('ADMIN')
+                  ? '/admin/products'
+                  : '/farm/products'
+              "
             >
               Cancel
             </button>

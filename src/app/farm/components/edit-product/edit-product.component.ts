@@ -26,23 +26,24 @@ export class EditProductComponent {
   constructor(
     private productService: ProductService,
     private farmService: FarmService,
-    private authService: AuthService,
+    public authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
     private toastr: ToastrService
   ) {
-    this.farm$ = this.farmService.getByFarmOwner(
-      this.authService.currentUser._id
-    );
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) this.productService.getProduct(id).then((p) => (this.product = p));
+
+    if (this.authService.currentUser.roles.includes('ADMIN'))
+      this.farm$ = this.farmService.getByProductId(id);
+    else
+      this.farm$ = this.farmService.getByFarmOwner(
+        this.authService.currentUser._id
+      );
 
     this.farm$.then((res) => {
       this.items = res.categories;
     });
-
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.productService.getProduct(id).then((p) => (this.product = p));
-    }
   }
 
   async save(form) {
@@ -60,7 +61,9 @@ export class EditProductComponent {
         'The product has been updated successfully'
       );
 
-      this.router.navigate(['/farm/products']);
+      if (this.authService.currentUser.roles.includes('ADMIN'))
+        this.router.navigate(['/admin/products']);
+      else this.router.navigate(['/farm/products']);
     } catch (error) {
       this.toastr.error('Unable to update product', error);
     }

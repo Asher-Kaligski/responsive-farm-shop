@@ -134,7 +134,9 @@
           </ng-container>
         </mat-form-field>
 
-        <mat-form-field *ngIf="isAdmin">
+        <mat-form-field
+          *ngIf="isAdmin && user._id !== authService.currentUser._id"
+        >
           <mat-label>Choose Role</mat-label>
           <mat-select
             matInput

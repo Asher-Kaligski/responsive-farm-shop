@@ -23,4 +23,8 @@ export class FarmService extends CrudService {
   async getByFarmOwner(farmOwnerId) {
     return await this.getById('farmOwner/' + farmOwnerId);
   }
+
+  async getByProductId(productId) {
+    return await this.getById('product/' + productId);
+  }
 }
