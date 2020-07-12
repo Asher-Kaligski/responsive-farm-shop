@@ -36,7 +36,9 @@ export class ShippingFormComponent {
 
       this.toastr.success('The order has been created successfully');
 
-      this.router.navigate(['/my/orders']);
+      if (this.authService.currentUser.roles.includes('ADMIN'))
+        this.router.navigate(['/admin/orders']);
+      else this.router.navigate(['/my/orders']);
     } catch (err) {
       let { error } = err;
 
