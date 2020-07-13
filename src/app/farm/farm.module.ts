@@ -12,6 +12,7 @@ import { FarmComponent } from './components/farm/farm.component';
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { FarmRoutingModule } from './farm-routing.module';
 import { FarmerAuthGuard } from './services/farmer-auth-guard.service';
+import { FarmOrdersComponent } from './components/farm-orders/farm-orders.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FarmerAuthGuard } from './services/farmer-auth-guard.service';
     FarmProductsComponent,
     EditProductComponent,
     ProductFormComponent,
+    FarmOrdersComponent,
   ],
   imports: [
     CommonModule,

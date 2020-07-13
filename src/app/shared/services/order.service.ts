@@ -38,6 +38,10 @@ export class OrderService extends CrudService {
     }
   }
 
+  async getByFarmOwner(farmOwnerId) {
+    return await this.getById('farmOwner/' + farmOwnerId);
+  }
+
   async getOrders(): Promise<Order[]> {
     return await this.get();
   }

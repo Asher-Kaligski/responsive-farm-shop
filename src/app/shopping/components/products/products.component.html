@@ -45,11 +45,18 @@
           <div *ngIf="(i + 1) % 2 === 0" class="w-100"></div>
         </ng-container>
 
-        <ng-container *ngIf="!media.isActive('xs') && !media.isActive('sm')">
+        <ng-container *ngIf="media.isActive('md') || media.isActive('lg')">
           <div class="col" [class.col-4]="filteredProducts.length - i < 3">
             <product-card [product]="p" [shopping-cart]="cart"></product-card>
           </div>
           <div *ngIf="(i + 1) % 3 === 0" class="w-100"></div>
+        </ng-container>
+
+        <ng-container *ngIf="media.isActive('xl')">
+          <div class="col" [class.col-3]="filteredProducts.length - i < 4">
+            <product-card [product]="p" [shopping-cart]="cart"></product-card>
+          </div>
+          <div *ngIf="(i + 1) % 4 === 0" class="w-100"></div>
         </ng-container>
       </ng-container>
     </div>

@@ -111,6 +111,9 @@
         <a mat-list-item routerLink="/farm/products" (click)="sidenav.toggle()"
           >Manage Farm Products</a
         >
+        <a mat-list-item routerLink="/farm/orders" (click)="sidenav.toggle()"
+          >Farm Orders</a
+        >
       </ng-container>
 
       <ng-container *ngIf="authService.currentUser.roles.includes('ADMIN')">
