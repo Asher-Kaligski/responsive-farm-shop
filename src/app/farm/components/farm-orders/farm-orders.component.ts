@@ -10,6 +10,7 @@ import { OrderService } from 'shared/services/order.service';
 interface FarmOrder {
   datePlaced: string;
   items: ShoppingCartItem[];
+  productIds: string[];
 }
 
 @Component({
@@ -19,6 +20,8 @@ interface FarmOrder {
 })
 export class FarmOrdersComponent implements OnInit {
   orders: FarmOrder[] = [];
+  matchOrderIndex: number = null;
+  matchedOrder: FarmOrder;
   displayedColumns: string[] = [
     'id',
     'datePlaced',
@@ -39,78 +42,12 @@ export class FarmOrdersComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // this.orders = await this.orderService.getByFarmOwner(
-    //   this.authService.currentUser._id
-    // );
-
     this.orderService
       .getByFarmOwner(this.authService.currentUser._id)
       .then((result: FarmOrder[]) => {
-        this.orders = result;
+        if (result.length > 0) this.sortOrdersByInterval(result, 'day');
 
-        console.log('this.orders', this.orders);
-        let productIds = [];
-        let tempIndex = 1;
-
-        this.orders.forEach((order, i, array) => {
-          if (i !== 0)
-            console.log(
-              'date',
-              this.isSameDay(
-                new Date(order.datePlaced),
-                new Date(array[i - 1].datePlaced)
-              )
-            );
-
-          if (
-            i !== 0 &&
-            this.isSameDay(
-              new Date(order.datePlaced),
-              new Date(array[i - 1].datePlaced)
-            )
-          ) {
-            console.log('i', i);
-            console.log('order.items', order.items);
-            console.log('array[i - 1].items', array[i - 1].items);
-
-            order.items.forEach((item, index) => {
-              if (productIds.includes(item.product._id)) {
-                const indexOfMatchedItem = array[i - 1].items
-                  .map((e) => e._id)
-                  .indexOf(item.product._id);
-                console.log('indexOfMatchedItem', indexOfMatchedItem);
-                if (indexOfMatchedItem !== -1) {
-                  array[i - 1].items[indexOfMatchedItem].quantity +=
-                    item.quantity;
-                  array[i - 1].items[
-                    indexOfMatchedItem
-                  ].itemTotalPrice += item.itemTotalPrice;
-                } else {
-                  productIds.push(item.product._id);
-                  array[i - 1].items.push(item);
-                }
-              } else {
-                productIds.push(item.product._id);
-                array[i - 1].items.push(item);
-              }
-              // if (order.items.length === index + 1) {
-              //   array.splice(i, 1);
-              //   tempIndex++;
-              //   console.log('tempIndex', tempIndex);
-              //   console.log('i', i);
-              // }
-            });
-          } else {
-            productIds = order.items.map((item) => item.product._id);
-          }
-        });
-
-        console.log(productIds);
         console.log('this.orders after adding', this.orders);
-
-        this.dataSource = new MatTableDataSource(this.orders);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       });
 
     /*this.dataSource.sortingDataAccessor = (item, property) => {
@@ -134,6 +71,34 @@ export class FarmOrdersComponent implements OnInit {
       return dataStr.indexOf(transformedFilter) !== -1;
     };*/
   }
+  sortOrdersByInterval(orders: FarmOrder[], interval: string) {
+    orders.forEach((order: FarmOrder, i) => {
+      if (i !== 0 && this.isSamePeriod(new Date(order.datePlaced), interval)) {
+        order.items.forEach((item: ShoppingCartItem, index) => {
+          if (this.matchedOrder.productIds.includes(item.product._id)) {
+            const productIndex = this.matchedOrder.items
+              .map((e) => e.product._id)
+              .indexOf(item.product._id);
+
+            this.matchedOrder.items[productIndex].quantity += item.quantity;
+            this.matchedOrder.items[productIndex].itemTotalPrice +=
+              item.itemTotalPrice;
+          } else {
+            this.matchedOrder.productIds.push(item.product._id);
+            this.matchedOrder.items.push(item);
+          }
+        });
+      } else {
+        const productIds = order.items.map((item) => item.product._id);
+        order.productIds = productIds;
+        this.orders.push(order);
+      }
+    });
+
+    this.dataSource = new MatTableDataSource(this.orders);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
   isSameDay(d1, d2) {
     return (
@@ -142,6 +107,67 @@ export class FarmOrdersComponent implements OnInit {
       d1.getDate() === d2.getDate()
     );
   }
+
+  isSameMonth(d1, d2) {
+    return (
+      d1.getFullYear() === d2.getFullYear() && d1.getMonth() === d2.getMonth()
+    );
+  }
+  isSameYear(d1, d2) {
+    return d1.getFullYear() === d2.getFullYear();
+  }
+
+  isSamePeriod(orderTime, period) {
+    let flag = false;
+    this.matchedOrder = null;
+
+    for (const order of this.orders) {
+      switch (period) {
+        case 'day':
+          flag = this.isSameDay(new Date(order.datePlaced), orderTime);
+          break;
+
+        case 'month':
+          flag = this.isSameMonth(new Date(order.datePlaced), orderTime);
+          break;
+
+        case 'year':
+          flag = this.isSameYear(new Date(order.datePlaced), orderTime);
+          break;
+
+        default:
+          break;
+      }
+      if (flag) {
+        this.matchedOrder = order;
+        break;
+      }
+    }
+
+    return flag;
+  }
+
+  /*isSameDay(d1) {
+    let flag = false;
+    this.orders.forEach((order, index) => {
+      const d2 = new Date(order.datePlaced);
+
+      if (
+        d1.getFullYear() === d2.getFullYear() &&
+        d1.getMonth() === d2.getMonth() &&
+        d1.getDate() === d2.getDate()
+      ) {
+        flag = true;
+        this.matchOrderIndex = index;
+      }
+    });
+
+    if (!flag) {
+      this.matchOrderIndex = null;
+    }
+
+    return flag;
+  }*/
 
   nestedFilterCheck(search, data, key) {
     if (typeof data[key] === 'object') {
