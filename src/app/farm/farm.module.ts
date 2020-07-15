@@ -13,6 +13,7 @@ import { ProductFormComponent } from './components/product-form/product-form.com
 import { FarmRoutingModule } from './farm-routing.module';
 import { FarmerAuthGuard } from './services/farmer-auth-guard.service';
 import { FarmOrdersComponent } from './components/farm-orders/farm-orders.component';
+import { FarmOrderDetailsComponent } from './farm-order-details/farm-order-details.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FarmOrdersComponent } from './components/farm-orders/farm-orders.compon
     EditProductComponent,
     ProductFormComponent,
     FarmOrdersComponent,
+    FarmOrderDetailsComponent,
   ],
   imports: [
     CommonModule,

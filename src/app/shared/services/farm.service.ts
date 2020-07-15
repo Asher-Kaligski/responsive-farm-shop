@@ -1,17 +1,33 @@
+import { ShoppingCartItem } from './../models/shopping-cart-item';
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 import { CrudService } from '../../core/services/crud.service';
+
+export interface FarmOrder {
+  datePlaced: string;
+  items: ShoppingCartItem[];
+  productIds: string[];
+}
 
 @Injectable({
   providedIn: 'root',
 })
 export class FarmService extends CrudService {
   endpoint = 'farms';
+  farmOrder: FarmOrder;
 
   constructor(http: HttpClient) {
     super(http);
   }
+
+  setFarmOrder(order: FarmOrder) {
+    this.farmOrder = order;
+  }
+  getFarmOrder() {
+    return this.farmOrder;
+  }
+
   async update(farm, farmId) {
     return await this.putById(farm, farmId);
   }

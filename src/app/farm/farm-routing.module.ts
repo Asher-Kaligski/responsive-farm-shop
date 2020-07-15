@@ -1,3 +1,4 @@
+import { FarmOrderDetailsComponent } from './farm-order-details/farm-order-details.component';
 import { FarmOrdersComponent } from './components/farm-orders/farm-orders.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -23,6 +24,11 @@ const routes: Routes = [
   {
     path: 'farm/products/:id',
     component: EditProductComponent,
+    canActivate: [AuthGuard, FarmerAuthGuard],
+  },
+  {
+    path: 'farm/order/view',
+    component: FarmOrderDetailsComponent,
     canActivate: [AuthGuard, FarmerAuthGuard],
   },
   {

@@ -54,7 +54,7 @@ export class AdminOrdersComponent implements OnInit {
       const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
       const transformedFilter = filter.trim().toLowerCase();
       return dataStr.indexOf(transformedFilter) !== -1;
-    }
+    };
   }
 
   nestedFilterCheck(search, data, key) {

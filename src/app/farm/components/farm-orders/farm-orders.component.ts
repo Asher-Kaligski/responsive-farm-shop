@@ -1,17 +1,15 @@
-import { ShoppingCartItem } from './../../../shared/models/shopping-cart-item';
-import { AuthService } from './../../../shared/services/auth.service';
+import {
+  FarmOrder,
+  FarmService,
+} from './../../../shared/services/farm.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Order } from 'shared/models/order';
 import { OrderService } from 'shared/services/order.service';
 
-interface FarmOrder {
-  datePlaced: string;
-  items: ShoppingCartItem[];
-  productIds: string[];
-}
+import { ShoppingCartItem } from './../../../shared/models/shopping-cart-item';
+import { AuthService } from './../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-farm-orders',
@@ -20,16 +18,9 @@ interface FarmOrder {
 })
 export class FarmOrdersComponent implements OnInit {
   orders: FarmOrder[] = [];
-  matchOrderIndex: number = null;
   matchedOrder: FarmOrder;
-  displayedColumns: string[] = [
-    'id',
-    'datePlaced',
-    'total',
-    'name',
-    'phone',
-    'view',
-  ];
+  timeInterval = 'day';
+  displayedColumns: string[] = ['id', 'datePlaced', 'total', 'view'];
 
   dataSource: MatTableDataSource<FarmOrder>;
 
@@ -38,39 +29,25 @@ export class FarmOrdersComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private authService: AuthService
+    private authService: AuthService,
+    private farmService: FarmService
   ) {}
 
   async ngOnInit() {
     this.orderService
       .getByFarmOwner(this.authService.currentUser._id)
       .then((result: FarmOrder[]) => {
-        if (result.length > 0) this.sortOrdersByInterval(result, 'day');
+        if (result.length > 0)
+          this.sortOrdersByInterval(result, this.timeInterval);
 
         console.log('this.orders after adding', this.orders);
       });
-
-    /*this.dataSource.sortingDataAccessor = (item, property) => {
-      if (property === 'total') {
-        return item.shoppingCart.totalPrice;
-      } else if (property === 'name') {
-        return item.customer.firstName;
-      } else if (property === 'phone') {
-        return item.customer.phone;
-      } else {
-        return item[property];
-      }
-    };
-
-    this.dataSource.filterPredicate = (data, filter: string) => {
-      const accumulator = (currentTerm, key) => {
-        return this.nestedFilterCheck(currentTerm, data, key);
-      };
-      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-      const transformedFilter = filter.trim().toLowerCase();
-      return dataStr.indexOf(transformedFilter) !== -1;
-    };*/
   }
+
+  setFarmOrder(order: FarmOrder) {
+    this.farmService.setFarmOrder(order);
+  }
+
   sortOrdersByInterval(orders: FarmOrder[], interval: string) {
     orders.forEach((order: FarmOrder, i) => {
       if (i !== 0 && this.isSamePeriod(new Date(order.datePlaced), interval)) {
@@ -98,6 +75,25 @@ export class FarmOrdersComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.orders);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      if (property === 'datePlaced') {
+        return item.datePlaced;
+      } else if (property === 'total') {
+        return this.calculateTotal(item);
+      } else {
+        return item[property];
+      }
+    };
+
+    this.dataSource.filterPredicate = (data, filter: string) => {
+      const accumulator = (currentTerm, key) => {
+        return this.nestedFilterCheck(currentTerm, data, key);
+      };
+      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+      const transformedFilter = filter.trim().toLowerCase();
+      return dataStr.indexOf(transformedFilter) !== -1;
+    };
   }
 
   isSameDay(d1, d2) {
@@ -147,27 +143,11 @@ export class FarmOrdersComponent implements OnInit {
     return flag;
   }
 
-  /*isSameDay(d1) {
-    let flag = false;
-    this.orders.forEach((order, index) => {
-      const d2 = new Date(order.datePlaced);
-
-      if (
-        d1.getFullYear() === d2.getFullYear() &&
-        d1.getMonth() === d2.getMonth() &&
-        d1.getDate() === d2.getDate()
-      ) {
-        flag = true;
-        this.matchOrderIndex = index;
-      }
-    });
-
-    if (!flag) {
-      this.matchOrderIndex = null;
-    }
-
-    return flag;
-  }*/
+  calculateTotal(order: FarmOrder) {
+    return order.items.reduce((sum, i) => {
+      return sum + i.itemTotalPrice;
+    }, 0);
+  }
 
   nestedFilterCheck(search, data, key) {
     if (typeof data[key] === 'object') {
