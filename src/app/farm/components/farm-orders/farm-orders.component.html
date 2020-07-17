@@ -4,22 +4,37 @@
   <div class="row">
     <div class="col-md"></div>
     <div class="mat-elevation-z8 col-md-8">
-      <mat-form-field class="mt-2">
-        <mat-label>Filter</mat-label>
-        <input
-          matInput
-          (keyup)="applyFilter($event)"
-          placeholder="Filter"
-          #input
-        />
-      </mat-form-field>
+      <div fxLayout="row" fxLayoutAlign="space-around center" class="mt-2">
+        <mat-form-field class="filter">
+          <mat-label>Filter</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Filter"
+            #input
+          />
+        </mat-form-field>
 
+        <mat-form-field class="interval">
+          <mat-label>Choose Time Interval</mat-label>
+          <mat-select
+            (selectionChange)="selected($event)"
+            [(ngModel)]="timeInterval"
+            name="interval"
+          >
+            <mat-option *ngFor="let t of timeIntervalArr" [value]="t">
+              {{ t.interval }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
       <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
           <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
           <mat-cell *matCellDef="let row">
             {{ dataSource.filteredData.indexOf(row) + 1 }}
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef> Total </mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="datePlaced">
@@ -27,8 +42,10 @@
             Time Interval
           </mat-header-cell>
           <mat-cell *matCellDef="let row">
-            {{ row.datePlaced | date: "short" }}
+            {{ row.datePlaced | date: timeInterval.format }}
+            {{ timeInterval.interval !== "day" ? "th year" : "" }}
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="total">
@@ -38,6 +55,9 @@
           <mat-cell *matCellDef="let row">
             ${{ calculateTotal(row) }}
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef>
+            ${{ calculateTotalAllOrders() }}
+          </mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="view">
@@ -52,6 +72,7 @@
               <mat-icon class="icon-preview">preview</mat-icon>
             </button>
           </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
         </ng-container>
 
         <ng-container matColumnDef="noRecord">
@@ -64,12 +85,13 @@
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
 
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">
+        <mat-row *matNoDataRow>
+          <mat-cell colspan="4">
             No data matching the filter "{{ input.value }}"
-          </td>
-        </tr>
+          </mat-cell>
+        </mat-row>
       </mat-table>
 
       <mat-paginator [pageSizeOptions]="[6, 12, 25, 100]"></mat-paginator>

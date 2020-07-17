@@ -10,6 +10,7 @@ import { UserService } from 'shared/services/user.service';
   styleUrls: ['./registration.component.scss'],
 })
 export class RegistrationComponent implements OnInit {
+  isLoading = false;
   constructor(
     public authService: AuthService,
     private userService: UserService,
@@ -23,7 +24,7 @@ export class RegistrationComponent implements OnInit {
     if (!form.valid) {
       return;
     }
-
+    this.isLoading = true;
     this.userService
       .create(form.value)
       .then(async (result) => {
@@ -31,6 +32,7 @@ export class RegistrationComponent implements OnInit {
         const password = form.value.password;
 
         await this.authService.login({ email, password });
+        this.isLoading = false;
 
         this.toastr.success('The account has been created successfully');
 
@@ -38,6 +40,7 @@ export class RegistrationComponent implements OnInit {
       })
       .catch((err) => {
         this.toastr.error(err.error);
+        this.isLoading = false;
       });
   }
 }

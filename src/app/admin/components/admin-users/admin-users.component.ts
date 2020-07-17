@@ -3,6 +3,7 @@ import { MediaObserver } from '@angular/flex-layout';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'shared/services/user.service';
 
 import { User } from './../../../shared/models/user';
@@ -14,6 +15,7 @@ import { User } from './../../../shared/models/user';
 })
 export class AdminUsersComponent implements OnInit {
   users: User[] = [];
+  isLoading = true;
 
   displayedColumns: string[] = [
     'id',
@@ -30,15 +32,21 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    public media: MediaObserver
+    public media: MediaObserver,
+    private toastr: ToastrService
   ) {}
 
   async ngOnInit() {
-    this.users = await this.userService.getAll();
-
-    this.dataSource = new MatTableDataSource(this.users);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    try {
+      this.users = await this.userService.getAll();
+      this.dataSource = new MatTableDataSource(this.users);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    } catch (err) {
+      this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   applyFilter(event: Event) {

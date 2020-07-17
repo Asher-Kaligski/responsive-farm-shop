@@ -1,5 +1,15 @@
 <div class="container">
-  <h1 class="text-center my-3">Users</h1>
+  <div fxLayout="column" fxLayoutAlign="space-evenly center" class="my-3">
+    <h1>Users</h1>
+    <h2 *ngIf="!users.length && !isLoading">
+      Users have not been found
+    </h2>
+
+    <ng-container *ngIf="isLoading">
+      <mat-spinner mode="indeterminate" diameter="70"></mat-spinner>
+      <h2>Loading data</h2>
+    </ng-container>
+  </div>
   <div class="row">
     <div class="col-md"></div>
     <div class="mat-elevation-z8 col-md-11">

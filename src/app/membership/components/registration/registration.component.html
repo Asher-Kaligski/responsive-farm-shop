@@ -1,9 +1,19 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <form #f="ngForm" (ngSubmit)="submit(f)">
+      <form
+        #f="ngForm"
+        (ngSubmit)="submit(f)"
+        fxLayout="column"
+        fxLayoutAlign="space-evenly center"
+      >
         <h1>Registration</h1>
-
+        <ng-container *ngIf="isLoading">
+          <mat-spinner mode="indeterminate" diameter="30"></mat-spinner>
+          <mat-card-subtitle
+            >Data verification in process. Please Wait.</mat-card-subtitle
+          >
+        </ng-container>
         <mat-form-field class="full-width-input">
           <mat-label>First Name</mat-label>
           <input

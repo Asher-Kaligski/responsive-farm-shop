@@ -49,3 +49,8 @@ mat-table {
   overflow-x: scroll;
   overflow-y: scroll;
 }
+
+.footer-align-center{
+  text-align: right;
+  justify-content: flex-end;
+}

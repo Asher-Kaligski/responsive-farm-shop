@@ -8,6 +8,7 @@ export interface FarmOrder {
   datePlaced: string;
   items: ShoppingCartItem[];
   productIds: string[];
+  timeInterval?: any;
 }
 
 @Injectable({

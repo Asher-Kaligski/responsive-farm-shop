@@ -1,5 +1,15 @@
 <div class="container">
-  <h1 class="text-center my-3">Orders</h1>
+  <div fxLayout="column" fxLayoutAlign="space-evenly center" class="my-3">
+    <h1>Orders</h1>
+    <h2 *ngIf="!orders.length && !isLoading">
+      Orders have not been found
+    </h2>
+
+    <ng-container *ngIf="isLoading">
+      <mat-spinner mode="indeterminate" diameter="70"></mat-spinner>
+      <h2>Loading data</h2>
+    </ng-container>
+  </div>
 
   <div class="row">
     <div class="col-md"></div>

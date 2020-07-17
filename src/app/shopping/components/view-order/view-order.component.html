@@ -1,8 +1,20 @@
 <div class="container">
-  <mat-card *ngIf="order$ | async as order">
-    <mat-card-title>Order Summary</mat-card-title>
+  <div fxLayout="column" fxLayoutAlign="space-evenly center" class="my-3">
+    <h1>Order Summary</h1>
+    <h2 *ngIf="!order && !isLoading">
+      Order have not been found
+    </h2>
+
+    <ng-container *ngIf="isLoading">
+      <mat-spinner mode="indeterminate" diameter="70"></mat-spinner>
+
+      <h2>Loading data</h2>
+    </ng-container>
+  </div>
+
+  <mat-card *ngIf="order">
     <mat-card-subtitle
-      >the order placed at
+      >The order was placed at
       {{ order.datePlaced | date: "medium" }}</mat-card-subtitle
     >
     <mat-card-content>

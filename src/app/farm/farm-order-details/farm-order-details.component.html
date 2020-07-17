@@ -1,1 +1,103 @@
-<p>farm-order-details works!</p>
+<div class="container">
+  <h1 class="text-center my-3">
+    Items that were ordered on
+    {{ order.datePlaced | date: order.timeInterval.format }} {{ order.timeInterval.interval !== "day" ? "th year" : "" }}
+  </h1>
+
+  <div class="row">
+    <div class="col-md"></div>
+    <div class="mat-elevation-z8 col-md-11">
+      <mat-form-field class="mt-2">
+        <mat-label>Filter</mat-label>
+        <input
+          matInput
+          (keyup)="applyFilter($event)"
+          placeholder="Filter"
+          #input
+        />
+      </mat-form-field>
+      <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ dataSource.filteredData.indexOf(row) + 1 }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> Total </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="imageUrl">
+          <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <div
+              [style.backgroundImage]="'url(' + row.product.imageUrl + ')'"
+              class="thumbnail"
+            ></div>
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="title">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Product
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.product.title }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Category
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            {{ row.product.category }}
+          </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Price
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> ${{ row.product.price }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Quantity
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.quantity }} </mat-cell>
+          <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="itemTotalPrice">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Total
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> ${{ row.itemTotalPrice }} </mat-cell>
+
+          <mat-footer-cell *matFooterCellDef>
+            ${{ calculateTotal() }}
+          </mat-footer-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="noRecord">
+          <mat-footer-cell *matFooterCellDef>No items found.</mat-footer-cell>
+        </ng-container>
+
+        <ng-template *ngIf="!dataSource">
+          <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
+        </ng-template>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+        <mat-footer-row *matFooterRowDef="displayedColumns"></mat-footer-row>
+      </mat-table>
+
+      <mat-paginator [pageSizeOptions]="[6, 12, 25, 100]"></mat-paginator>
+    </div>
+
+    <div class="col-md"></div>
+  </div>
+</div>

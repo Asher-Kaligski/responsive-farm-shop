@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card>
     <mat-card-content>
-      <form #f="ngForm" (ngSubmit)="login(f)">
+      <form #f="ngForm" (ngSubmit)="login(f)" fxLayout="column" fxLayoutAlign="space-evenly center">
         <h1>Log In</h1>
         <mat-spinner
           *ngIf="isLoading"

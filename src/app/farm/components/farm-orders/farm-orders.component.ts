@@ -1,15 +1,19 @@
-import {
-  FarmOrder,
-  FarmService,
-} from './../../../shared/services/farm.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { StorageKey } from 'shared/models/storage.model';
 import { OrderService } from 'shared/services/order.service';
+import { StorageService } from 'shared/services/storage.service';
 
 import { ShoppingCartItem } from './../../../shared/models/shopping-cart-item';
 import { AuthService } from './../../../shared/services/auth.service';
+import {
+  FarmOrder,
+  FarmService,
+} from './../../../shared/services/farm.service';
+
+const { FARM_ORDER } = StorageKey;
 
 @Component({
   selector: 'app-farm-orders',
@@ -17,10 +21,16 @@ import { AuthService } from './../../../shared/services/auth.service';
   styleUrls: ['./farm-orders.component.scss'],
 })
 export class FarmOrdersComponent implements OnInit {
+  sortedOrders: FarmOrder[] = [];
   orders: FarmOrder[] = [];
   matchedOrder: FarmOrder;
-  timeInterval = 'day';
-  displayedColumns: string[] = ['id', 'datePlaced', 'total', 'view'];
+  timeIntervalArr = [
+    { interval: 'day', format: 'fullDate' },
+    { interval: 'month', format: 'M/yyyy' },
+    { interval: 'year', format: 'yyyy' },
+  ];
+  timeInterval;
+  displayedColumns: string[] = ['id', 'datePlaced', 'view', 'total'];
 
   dataSource: MatTableDataSource<FarmOrder>;
 
@@ -30,22 +40,50 @@ export class FarmOrdersComponent implements OnInit {
   constructor(
     private orderService: OrderService,
     private authService: AuthService,
-    private farmService: FarmService
+    private farmService: FarmService,
+    private storage: StorageService
   ) {}
 
   async ngOnInit() {
     this.orderService
       .getByFarmOwner(this.authService.currentUser._id)
       .then((result: FarmOrder[]) => {
-        if (result.length > 0)
-          this.sortOrdersByInterval(result, this.timeInterval);
-
-        console.log('this.orders after adding', this.orders);
+        if (result.length > 0) {
+          this.timeInterval = this.timeIntervalArr[0];
+          this.orders = JSON.parse(JSON.stringify(result));
+          this.sortOrdersByInterval(result, this.timeInterval.interval);
+        }
       });
   }
 
   setFarmOrder(order: FarmOrder) {
-    this.farmService.setFarmOrder(order);
+    order.timeInterval = this.timeInterval;
+    this.storage.save(FARM_ORDER, order);
+  }
+
+  initDataTable() {
+    this.dataSource = new MatTableDataSource(this.sortedOrders);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+
+    this.dataSource.filterPredicate = (data, filter: string) => {
+      const accumulator = (currentTerm, key) => {
+        return this.nestedFilterCheck(currentTerm, data, key);
+      };
+      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+      const transformedFilter = filter.trim().toLowerCase();
+      return dataStr.indexOf(transformedFilter) !== -1;
+    };
+
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      if (property === 'datePlaced') {
+        return item.datePlaced;
+      } else if (property === 'total') {
+        return this.calculateTotal(item);
+      } else {
+        return item[property];
+      }
+    };
   }
 
   sortOrdersByInterval(orders: FarmOrder[], interval: string) {
@@ -68,32 +106,11 @@ export class FarmOrdersComponent implements OnInit {
       } else {
         const productIds = order.items.map((item) => item.product._id);
         order.productIds = productIds;
-        this.orders.push(order);
+        this.sortedOrders.push(order);
       }
     });
 
-    this.dataSource = new MatTableDataSource(this.orders);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      if (property === 'datePlaced') {
-        return item.datePlaced;
-      } else if (property === 'total') {
-        return this.calculateTotal(item);
-      } else {
-        return item[property];
-      }
-    };
-
-    this.dataSource.filterPredicate = (data, filter: string) => {
-      const accumulator = (currentTerm, key) => {
-        return this.nestedFilterCheck(currentTerm, data, key);
-      };
-      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-      const transformedFilter = filter.trim().toLowerCase();
-      return dataStr.indexOf(transformedFilter) !== -1;
-    };
+    this.initDataTable();
   }
 
   isSameDay(d1, d2) {
@@ -117,7 +134,7 @@ export class FarmOrdersComponent implements OnInit {
     let flag = false;
     this.matchedOrder = null;
 
-    for (const order of this.orders) {
+    for (const order of this.sortedOrders) {
       switch (period) {
         case 'day':
           flag = this.isSameDay(new Date(order.datePlaced), orderTime);
@@ -147,6 +164,24 @@ export class FarmOrdersComponent implements OnInit {
     return order.items.reduce((sum, i) => {
       return sum + i.itemTotalPrice;
     }, 0);
+  }
+
+  calculateTotalAllOrders() {
+    return this.sortedOrders.reduce((sum, order) => {
+      return sum + this.calculateTotal(order);
+    }, 0);
+  }
+
+  selected(event) {
+    const copyObj: FarmOrder[] = JSON.parse(JSON.stringify(this.orders));
+    this.sortedOrders = [];
+
+    const index = this.timeIntervalArr.findIndex(
+      (e) => e.interval === event.value
+    );
+    if (index !== -1) this.timeInterval = this.timeIntervalArr[index];
+
+    this.sortOrdersByInterval(copyObj, this.timeInterval.interval);
   }
 
   nestedFilterCheck(search, data, key) {

@@ -17,6 +17,7 @@ export interface Item {
 export class ProductCardComponent implements OnInit {
   @Input('product') product: Product;
   @Input('shopping-cart') shoppingCart: ShoppingCart;
+  isLoading = false;
 
   constructor(
     private cartService: ShoppingCartService,
@@ -38,6 +39,7 @@ export class ProductCardComponent implements OnInit {
 
   private async updateItemQuantity(change: number) {
     try {
+      this.isLoading = true;
       const item: Item = {
         productId: this.product._id,
         quantity: this.getQuantity() + change,
@@ -53,6 +55,8 @@ export class ProductCardComponent implements OnInit {
       }
 
       this.toastr.error(error);
+    } finally {
+      this.isLoading = false;
     }
   }
 

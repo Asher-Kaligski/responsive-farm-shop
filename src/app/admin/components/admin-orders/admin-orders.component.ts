@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { Order } from 'shared/models/order';
 import { OrderService } from 'shared/services/order.service';
 
@@ -11,6 +12,7 @@ import { OrderService } from 'shared/services/order.service';
   styleUrls: ['./admin-orders.component.scss'],
 })
 export class AdminOrdersComponent implements OnInit {
+  isLoading = true;
   orders: Order[] = [];
   displayedColumns: string[] = [
     'id',
@@ -26,35 +28,44 @@ export class AdminOrdersComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private orderService: OrderService) {}
+  constructor(
+    private orderService: OrderService,
+    private toastr: ToastrService
+  ) {}
 
   async ngOnInit() {
-    this.orders = await this.orderService.getOrders();
+    try {
+      this.orders = await this.orderService.getOrders();
 
-    this.dataSource = new MatTableDataSource(this.orders);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+      this.dataSource = new MatTableDataSource(this.orders);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
 
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      if (property === 'total') {
-        return item.shoppingCart.totalPrice;
-      } else if (property === 'name') {
-        return item.customer.firstName;
-      } else if (property === 'phone') {
-        return item.customer.phone;
-      } else {
-        return item[property];
-      }
-    };
-
-    this.dataSource.filterPredicate = (data, filter: string) => {
-      const accumulator = (currentTerm, key) => {
-        return this.nestedFilterCheck(currentTerm, data, key);
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        if (property === 'total') {
+          return item.shoppingCart.totalPrice;
+        } else if (property === 'name') {
+          return item.customer.firstName;
+        } else if (property === 'phone') {
+          return item.customer.phone;
+        } else {
+          return item[property];
+        }
       };
-      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-      const transformedFilter = filter.trim().toLowerCase();
-      return dataStr.indexOf(transformedFilter) !== -1;
-    };
+
+      this.dataSource.filterPredicate = (data, filter: string) => {
+        const accumulator = (currentTerm, key) => {
+          return this.nestedFilterCheck(currentTerm, data, key);
+        };
+        const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+        const transformedFilter = filter.trim().toLowerCase();
+        return dataStr.indexOf(transformedFilter) !== -1;
+      };
+    } catch (err) {
+      this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   nestedFilterCheck(search, data, key) {

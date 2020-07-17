@@ -13,6 +13,7 @@ import { ProductService } from 'shared/services/product.service';
 })
 export class AdminProductsComponent implements OnInit {
   products: Product[] = [];
+  isLoading = true;
   displayedColumns: string[] = [
     'id',
     'farmName',
@@ -34,26 +35,32 @@ export class AdminProductsComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.products = await this.productService.getAll();
+    try {
+      this.products = await this.productService.getAll();
 
-    this.dataSource = new MatTableDataSource(this.products);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+      this.dataSource = new MatTableDataSource(this.products);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
 
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      if (property === 'farmName') return item.farm.name;
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        if (property === 'farmName') return item.farm.name;
 
-      return item[property];
-    };
-
-    this.dataSource.filterPredicate = (data, filter: string) => {
-      const accumulator = (currentTerm, key) => {
-        return this.nestedFilterCheck(currentTerm, data, key);
+        return item[property];
       };
-      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-      const transformedFilter = filter.trim().toLowerCase();
-      return dataStr.indexOf(transformedFilter) !== -1;
-    };
+
+      this.dataSource.filterPredicate = (data, filter: string) => {
+        const accumulator = (currentTerm, key) => {
+          return this.nestedFilterCheck(currentTerm, data, key);
+        };
+        const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+        const transformedFilter = filter.trim().toLowerCase();
+        return dataStr.indexOf(transformedFilter) !== -1;
+      };
+    } catch (err) {
+      this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   nestedFilterCheck(search, data, key) {

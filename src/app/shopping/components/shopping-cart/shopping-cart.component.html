@@ -1,5 +1,6 @@
 <div class="container">
   <h1 class="text-center my-3">Shopping Cart</h1>
+  <h2 *ngIf="!cart.items.length" class="text-center my-3">You have 0 items in your shopping cart.</h2>
 
   <div class="row">
     <div class="col-md"></div>
@@ -55,7 +56,10 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             Total Price
           </mat-header-cell>
-          <mat-cell *matCellDef="let row"> ${{ row.itemTotalPrice }} </mat-cell>
+          <mat-cell *matCellDef="let row">
+            ${{ row?.itemTotalPrice }}
+          </mat-cell>
+
           <mat-footer-cell *matFooterCellDef>
             ${{ cart.totalPrice }}
           </mat-footer-cell>
@@ -63,8 +67,8 @@
 
         <ng-container matColumnDef="noRecord">
           <mat-footer-cell *matFooterCellDef
-            >No products found.</mat-footer-cell
-          >
+            >No products found.
+          </mat-footer-cell>
         </ng-container>
 
         <ng-template *ngIf="!dataSource">
@@ -79,6 +83,7 @@
 
       <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
+
     <div class="col-md"></div>
   </div>
 

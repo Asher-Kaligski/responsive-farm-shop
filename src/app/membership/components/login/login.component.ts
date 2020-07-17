@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'shared/services/auth.service';
 
 @Component({
@@ -14,7 +15,8 @@ export class LoginComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private toastr: ToastrService
   ) {}
 
   public async login(form) {
@@ -30,10 +32,11 @@ export class LoginComponent {
         'returnUrl'
       );
       this.router.navigate([returnUrl || '/']);
-    } catch (e) {
+    } catch (err) {
       this.isValid = false;
+      this.toastr.error(err.error);
+    } finally {
       this.isLoading = false;
-      console.error('Unable to Login!\n', e);
     }
   }
 }
