@@ -7,10 +7,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'responsive-farm-shop';
-  subscription: Subscription;
-  deviceXs: boolean;
-
   constructor() {}
 
   ngOnInit() {}

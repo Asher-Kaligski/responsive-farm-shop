@@ -1,4 +1,4 @@
-import { FarmOrderDetailsComponent } from './farm-order-details/farm-order-details.component';
+import { FarmOrderDetailsComponent } from './components/farm-order-details/farm-order-details.component';
 import { FarmOrdersComponent } from './components/farm-orders/farm-orders.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';

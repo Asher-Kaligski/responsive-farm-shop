@@ -6,8 +6,8 @@ import { ToastrService } from 'ngx-toastr';
 import { StorageKey } from 'shared/models/storage.model';
 import { StorageService } from 'shared/services/storage.service';
 
-import { ShoppingCartItem } from './../../shared/models/shopping-cart-item';
-import { FarmOrder } from './../../shared/services/farm.service';
+import { ShoppingCartItem } from 'shared/models/shopping-cart-item';
+import { FarmOrder } from 'shared/services/farm.service';
 
 const { FARM_ORDER } = StorageKey;
 

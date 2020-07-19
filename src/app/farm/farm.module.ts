@@ -13,7 +13,7 @@ import { ProductFormComponent } from './components/product-form/product-form.com
 import { FarmRoutingModule } from './farm-routing.module';
 import { FarmerAuthGuard } from './services/farmer-auth-guard.service';
 import { FarmOrdersComponent } from './components/farm-orders/farm-orders.component';
-import { FarmOrderDetailsComponent } from './farm-order-details/farm-order-details.component';
+import { FarmOrderDetailsComponent } from './components/farm-order-details/farm-order-details.component';
 
 @NgModule({
   declarations: [
