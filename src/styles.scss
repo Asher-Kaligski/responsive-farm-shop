@@ -14,10 +14,15 @@ $fa-font-path: "../node_modules/font-awesome/fonts";
 
 $primary: mat-palette($mat-cyan, 700);
 $accent: mat-palette($mat-pink, A200, A100, A400);
+$background-color: map_get($mat-cyan, 100);
 
 $candy-app-warn: mat-palette($mat-red);
 
 $theme: mat-light-theme($primary, $accent);
+
+$background: map-get($theme, background);
+$background: map_merge($background, (background: $background-color));
+$theme: map_merge($theme, (background: $background));
 
 @include angular-material-theme($theme);
 
