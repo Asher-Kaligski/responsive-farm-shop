@@ -1,5 +1,16 @@
 <div class="container">
-  <h1 class="text-center my-3">Farm Orders</h1>
+  <div fxLayout="column" fxLayoutAlign="space-evenly center" class="my-3">
+    <h1>Farm Orders</h1>
+    <h2 *ngIf="!sortedOrders && !isLoading">
+      Orders have not been found
+    </h2>
+
+    <ng-container *ngIf="isLoading">
+      <mat-spinner mode="indeterminate" diameter="70"></mat-spinner>
+
+      <h2>Loading data</h2>
+    </ng-container>
+  </div>
 
   <div class="row">
     <div class="col-md"></div>
@@ -74,14 +85,6 @@
           </mat-cell>
           <mat-footer-cell *matFooterCellDef> </mat-footer-cell>
         </ng-container>
-
-        <ng-container matColumnDef="noRecord">
-          <mat-footer-cell *matFooterCellDef>No orders found.</mat-footer-cell>
-        </ng-container>
-
-        <ng-template *ngIf="!dataSource">
-          <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
-        </ng-template>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

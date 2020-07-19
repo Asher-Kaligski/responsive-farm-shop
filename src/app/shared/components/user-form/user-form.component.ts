@@ -16,6 +16,7 @@ export class UserFormComponent implements OnInit {
   isAdmin = false;
   userId: string;
   rolesList: string[] = ['CUSTOMER', 'FARM_OWNER'];
+  isLoading = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -34,7 +35,7 @@ export class UserFormComponent implements OnInit {
 
   async submit(form) {
     if (!form.valid) return;
-    console.log('form', form.value);
+    this.isLoading = true;
     try {
       await this.userService.updateUser(form.value, this.userId);
 
@@ -48,13 +49,9 @@ export class UserFormComponent implements OnInit {
         this.router.navigate(['/']);
       }
     } catch (err) {
-      let { error } = err;
-
-      if (!error) {
-        error = err;
-      }
-
-      this.toastr.error(error);
+      this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
     }
   }
 

@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { StorageKey } from 'shared/models/storage.model';
-import { FarmService } from 'shared/services/farm.service';
 import { StorageService } from 'shared/services/storage.service';
 
 import { ShoppingCartItem } from './../../shared/models/shopping-cart-item';
@@ -17,6 +17,7 @@ const { FARM_ORDER } = StorageKey;
   styleUrls: ['./farm-order-details.component.scss'],
 })
 export class FarmOrderDetailsComponent implements OnInit {
+  isLoading = true;
   order: FarmOrder;
   displayedColumns: string[] = [
     'id',
@@ -33,38 +34,41 @@ export class FarmOrderDetailsComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(
-    private farmService: FarmService,
-    private storage: StorageService
-  ) {}
+  constructor(private storage: StorageService, private toastr: ToastrService) {}
 
-  ngOnInit(): void {
-    this.order = this.storage.read(FARM_ORDER);
+  ngOnInit() {
+    try {
+      this.order = this.storage.read(FARM_ORDER);
 
-    this.dataSource = new MatTableDataSource(this.order.items);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+      this.dataSource = new MatTableDataSource(this.order.items);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
 
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      if (property === 'title') {
-        return item.product.title;
-      } else if (property === 'category') {
-        return item.product.category;
-      } else if (property === 'price') {
-        return item.product.price;
-      } else {
-        return item[property];
-      }
-    };
-
-    this.dataSource.filterPredicate = (data, filter: string) => {
-      const accumulator = (currentTerm, key) => {
-        return this.nestedFilterCheck(currentTerm, data, key);
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        if (property === 'title') {
+          return item.product.title;
+        } else if (property === 'category') {
+          return item.product.category;
+        } else if (property === 'price') {
+          return item.product.price;
+        } else {
+          return item[property];
+        }
       };
-      const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
-      const transformedFilter = filter.trim().toLowerCase();
-      return dataStr.indexOf(transformedFilter) !== -1;
-    };
+
+      this.dataSource.filterPredicate = (data, filter: string) => {
+        const accumulator = (currentTerm, key) => {
+          return this.nestedFilterCheck(currentTerm, data, key);
+        };
+        const dataStr = Object.keys(data).reduce(accumulator, '').toLowerCase();
+        const transformedFilter = filter.trim().toLowerCase();
+        return dataStr.indexOf(transformedFilter) !== -1;
+      };
+    } catch (err) {
+      this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   nestedFilterCheck(search, data, key) {
@@ -81,9 +85,11 @@ export class FarmOrderDetailsComponent implements OnInit {
   }
 
   calculateTotal() {
-    return this.order.items.reduce((sum, i) => {
+    const total = this.order.items.reduce((sum, i) => {
       return sum + i.itemTotalPrice;
     }, 0);
+
+    return Number(total.toFixed(2));
   }
 
   applyFilter(event: Event) {

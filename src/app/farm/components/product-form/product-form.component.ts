@@ -20,6 +20,7 @@ interface Farm {
 export class ProductFormComponent {
   farm$: Promise<Farm> = null;
   items: [];
+  isLoading = false;
 
   constructor(
     private productService: ProductService,
@@ -42,7 +43,7 @@ export class ProductFormComponent {
     if (!form.valid) {
       return;
     }
-
+    this.isLoading = true;
     try {
       const farm = await this.farm$;
 
@@ -56,7 +57,9 @@ export class ProductFormComponent {
 
       this.router.navigate(['/farm/products']);
     } catch (err) {
-      this.toastr.error('Unable to create product', err.error);
+      this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
     }
   }
 }

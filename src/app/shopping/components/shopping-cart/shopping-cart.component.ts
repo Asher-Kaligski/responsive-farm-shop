@@ -1,13 +1,14 @@
-import { Subscription } from 'rxjs';
-import { MediaObserver, MediaChange } from '@angular/flex-layout';
-import { ShoppingCartItem } from './../../../shared/models/shopping-cart-item';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { ShoppingCart } from 'shared/models/shopping-cart';
-import { ShoppingCartService } from 'shared/services/shopping-cart.service';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
+import { ShoppingCart } from 'shared/models/shopping-cart';
+import { ShoppingCartService } from 'shared/services/shopping-cart.service';
+
+import { ShoppingCartItem } from './../../../shared/models/shopping-cart-item';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -18,6 +19,7 @@ export class ShoppingCartComponent implements OnInit {
   cart: ShoppingCart;
   subscription: Subscription;
   mediaSub: Subscription;
+  isLoading = true;
 
   displayedColumns: string[] = ['title', 'quantity', 'price', 'totalPrice'];
   dataSource: MatTableDataSource<ShoppingCartItem>;
@@ -51,32 +53,37 @@ export class ShoppingCartComponent implements OnInit {
           this.displayedColumns.splice(2, 1);
       }
     });
+    try {
+      this.cart = await this.cartService.getCart();
+      this.dataSource = new MatTableDataSource(this.cart.items);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
 
-    this.cart = await this.cartService.getCart();
-    this.dataSource = new MatTableDataSource(this.cart.items);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+      this.subscription = this.cartService
+        .getCartChangeEmitter()
+        .subscribe((shoppingCart) => {
+          this.cart = shoppingCart;
+          this.dataSource = new MatTableDataSource(this.cart.items);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        });
 
-    this.subscription = this.cartService
-      .getCartChangeEmitter()
-      .subscribe((shoppingCart) => {
-        this.cart = shoppingCart;
-        this.dataSource = new MatTableDataSource(this.cart.items);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
-
-    this.dataSource.sortingDataAccessor = (item, property) => {
-      if (property === 'title') {
-        return item.product.title;
-      } else if (property === 'price') {
-        return item.product.price;
-      } else if (property === 'totalPrice') {
-        return item.itemTotalPrice;
-      } else {
-        return item[property];
-      }
-    };
+      this.dataSource.sortingDataAccessor = (item, property) => {
+        if (property === 'title') {
+          return item.product.title;
+        } else if (property === 'price') {
+          return item.product.price;
+        } else if (property === 'totalPrice') {
+          return item.itemTotalPrice;
+        } else {
+          return item[property];
+        }
+      };
+    } catch (err) {
+      this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   applyFilter(event: Event) {

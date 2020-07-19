@@ -1,8 +1,10 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-6">
-      <mat-card>
+      
+      <mat-card *ngIf="product">
         <mat-card-content>
+          
           <form #f="ngForm" (ngSubmit)="save(f)">
             <h1>Edit Product</h1>
 
@@ -122,6 +124,8 @@
               [disabled]="!f.valid"
             >
               Update
+              <mat-icon *ngIf="isLoading"><mat-spinner mode="indeterminate" diameter="21">
+              </mat-spinner></mat-icon>
             </button>
           </form>
         </mat-card-content>
@@ -129,7 +133,7 @@
     </div>
     <div class="col-md-6">
       <div class="product-card">
-        <mat-card class="product-card">
+        <mat-card class="product-card" *ngIf="product">
           <h1>Preview Product</h1>
           <img
             mat-card-image

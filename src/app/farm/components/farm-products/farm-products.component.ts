@@ -22,6 +22,7 @@ export class FarmProductsComponent implements OnInit {
     'imageUrl',
     'actions',
   ];
+  isLoading = true;
 
   dataSource: MatTableDataSource<Product>;
 
@@ -35,13 +36,19 @@ export class FarmProductsComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.products = await this.productService.getByFarmOwner(
-      this.authService.currentUser._id
-    );
+    try {
+      this.products = await this.productService.getByFarmOwner(
+        this.authService.currentUser._id
+      );
 
-    this.dataSource = new MatTableDataSource(this.products);
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+      this.dataSource = new MatTableDataSource(this.products);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    } catch (err) {
+      this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   applyFilter(event: Event) {

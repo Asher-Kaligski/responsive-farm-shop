@@ -1,7 +1,17 @@
 <div class="container">
-  <h1 class="text-center my-3">Shopping Cart</h1>
-  <h2 *ngIf="!cart.items.length" class="text-center my-3">You have 0 items in your shopping cart.</h2>
+ 
+  <div fxLayout="column" fxLayoutAlign="space-evenly center" class="my-3">
+    <h1>Shopping Cart</h1>
+    <h2 *ngIf="!cart?.items.length && !isLoading">
+      You have 0 items in your shopping cart.
+    </h2>
 
+    <ng-container *ngIf="isLoading">
+      <mat-spinner mode="indeterminate" diameter="70"></mat-spinner>
+
+      <h2>Loading data</h2>
+    </ng-container>
+  </div>
   <div class="row">
     <div class="col-md"></div>
     <div class="mat-elevation-z8 col-md-10">
@@ -61,19 +71,9 @@
           </mat-cell>
 
           <mat-footer-cell *matFooterCellDef>
-            ${{ cart.totalPrice }}
+            ${{ cart?.totalPrice }}
           </mat-footer-cell>
         </ng-container>
-
-        <ng-container matColumnDef="noRecord">
-          <mat-footer-cell *matFooterCellDef
-            >No products found.
-          </mat-footer-cell>
-        </ng-container>
-
-        <ng-template *ngIf="!dataSource">
-          <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
-        </ng-template>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

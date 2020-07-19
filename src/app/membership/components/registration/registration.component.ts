@@ -30,13 +30,16 @@ export class RegistrationComponent implements OnInit {
       .then(async (result) => {
         const email = form.value.email;
         const password = form.value.password;
+        try {
+          await this.authService.login({ email, password });
+          this.toastr.success('The account has been created successfully');
 
-        await this.authService.login({ email, password });
-        this.isLoading = false;
-
-        this.toastr.success('The account has been created successfully');
-
-        this.router.navigate(['/']);
+          this.router.navigate(['/']);
+        } catch (err) {
+          this.toastr.error(err.error);
+        } finally {
+          this.isLoading = false;
+        }
       })
       .catch((err) => {
         this.toastr.error(err.error);

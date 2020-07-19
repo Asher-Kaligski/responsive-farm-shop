@@ -20,6 +20,7 @@ interface Farm {
 export class FarmComponent implements OnInit {
   farm$: Promise<Farm> = null;
   items = [];
+  isLoading = false;
 
   constructor(
     private categoryService: CategoryService,
@@ -45,7 +46,7 @@ export class FarmComponent implements OnInit {
     if (!form.valid) {
       return;
     }
-
+    this.isLoading = true;
     try {
       form.value.farmOwnerId = this.authService.currentUser._id;
 
@@ -55,6 +56,8 @@ export class FarmComponent implements OnInit {
       this.toastr.success('The farm has been created successfully.');
     } catch (err) {
       this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -63,7 +66,7 @@ export class FarmComponent implements OnInit {
     if (!form.valid) {
       return;
     }
-
+    this.isLoading = true;
     try {
       const farm = await this.farm$;
 
@@ -75,6 +78,8 @@ export class FarmComponent implements OnInit {
       this.toastr.success('The farm has been updated successfully.');
     } catch (err) {
       this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
     }
   }
 }

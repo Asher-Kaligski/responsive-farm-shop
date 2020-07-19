@@ -1,13 +1,23 @@
 <div class="container">
-  <h1 class="text-center my-3">My Orders</h1>
-  <h2 *ngIf="!orders.length" class="text-center my-3">You have 0 items in your shopping cart.</h2>
+  <div fxLayout="column" fxLayoutAlign="space-evenly center" class="my-3">
+    <h1>My Orders</h1>
+    <h2 *ngIf="!orders?.length && !isLoading">
+      Orders have not been found
+    </h2>
+
+    <ng-container *ngIf="isLoading">
+      <mat-spinner mode="indeterminate" diameter="70"></mat-spinner>
+
+      <h2>Loading data</h2>
+    </ng-container>
+  </div>
 
   <div class="row">
     <div class="col-md"></div>
     <div class="mat-elevation-z8 col-md-8">
       <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef> OrderID </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
           <mat-cell *matCellDef="let row; index as i">
             {{
               this.paginator.pageIndex == 0
@@ -47,14 +57,6 @@
             </button>
           </mat-cell>
         </ng-container>
-
-        <ng-container matColumnDef="noRecord">
-          <mat-footer-cell *matFooterCellDef>No orders found.</mat-footer-cell>
-        </ng-container>
-
-        <ng-template *ngIf="!dataSource">
-          <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
-        </ng-template>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

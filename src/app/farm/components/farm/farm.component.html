@@ -80,6 +80,9 @@
         </button>
         <button mat-raised-button color="primary" [disabled]="!f.valid">
           Update
+          <mat-icon *ngIf="isLoading"
+            ><mat-spinner mode="indeterminate" diameter="21"> </mat-spinner
+          ></mat-icon>
         </button>
       </form>
     </mat-card-content>
@@ -149,7 +152,7 @@
           </ng-container>
         </mat-form-field>
         <h1>Choose Product Category</h1>
-         <mat-selection-list
+        <mat-selection-list
           required
           ngModel
           name="categories"
@@ -165,6 +168,9 @@
         </button>
         <button mat-raised-button color="primary" [disabled]="!f.valid">
           Create
+          <mat-icon *ngIf="isLoading"
+            ><mat-spinner mode="indeterminate" diameter="21"> </mat-spinner
+          ></mat-icon>
         </button>
       </form>
     </mat-card-content>

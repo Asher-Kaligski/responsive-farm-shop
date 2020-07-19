@@ -8,12 +8,7 @@
         fxLayoutAlign="space-evenly center"
       >
         <h1>Registration</h1>
-        <ng-container *ngIf="isLoading">
-          <mat-spinner mode="indeterminate" diameter="30"></mat-spinner>
-          <mat-card-subtitle
-            >Data verification in process. Please Wait.</mat-card-subtitle
-          >
-        </ng-container>
+        
         <mat-form-field class="full-width-input">
           <mat-label>First Name</mat-label>
           <input
@@ -146,6 +141,8 @@
 
         <button mat-raised-button color="primary" [disabled]="!f.valid">
           Submit
+          <mat-icon *ngIf="isLoading"><mat-spinner mode="indeterminate" diameter="21">
+          </mat-spinner></mat-icon>
         </button>
       </form>
     </mat-card-content>

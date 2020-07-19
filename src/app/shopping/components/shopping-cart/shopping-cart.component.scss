@@ -26,7 +26,7 @@ mat-header-cell,
 mat-footer-cell,
 mat-cell {
   justify-content: center;
-  flex: 0 0 180px;
+  flex: 0 0 190px;
   border-bottom-width: 1px;
   border-bottom-style: solid;
   border-bottom-color: lightgrey;
@@ -53,4 +53,8 @@ mat-table {
 .footer-align-center{
   text-align: right;
   justify-content: flex-end;
+}
+
+product-quantity{
+  width: 100%;
 }

@@ -39,20 +39,23 @@
               <mat-icon>remove</mat-icon>
             </button>
           </div>
-          <div *ngIf="!isLoading" class="col text-center">
+          
+           <div *ngIf="!isLoading" class="col text-center">
             <div>{{ getQuantity() }} in cart</div>
           </div>
-          <div *ngIf="isLoading" class="col text-center">
-            <!-- <mat-spinner mode="indeterminate" diameter="30"></mat-spinner> -->
-            <div>updating quantity...</div>
-          </div>
-          <!-- <ng-template #loading>
-            <div class="col" fxLayout="row" fxLayoutAlign="center center">
-              <mat-spinner mode="indeterminate" diameter="30"></mat-spinner>
-
-              <div>updating quantity</div>
+          <div *ngIf="isLoading" class="col">
+            <div class="row">
+              <div class="col-4"></div>
+              <div class="col">
+                <mat-spinner
+                  diameter="35"
+                  mode="indeterminate"
+                  class="mr-5"
+                ></mat-spinner>
+              </div>
+              <div class="col-4"></div>
             </div>
-          </ng-template> -->
+          </div> 
           <div class="col-2">
             <button
               mat-raised-button

@@ -1,8 +1,7 @@
 <div class="container">
-
   <div fxLayout="column" fxLayoutAlign="space-evenly center" class="my-3">
     <h1>Products</h1>
-    <h2 *ngIf="!products.length && !isLoading">
+    <h2 *ngIf="!products?.length && !isLoading">
       Products have not been found
     </h2>
 
@@ -12,8 +11,6 @@
     </ng-container>
   </div>
 
-
-  
   <div class="row">
     <div class="col-md"></div>
     <div class="mat-elevation-z8 col-md-11">
@@ -99,14 +96,6 @@
             </button>
           </mat-cell>
         </ng-container>
-
-        <ng-container matColumnDef="noRecord">
-          <mat-footer-cell *matFooterCellDef>No products found.</mat-footer-cell>
-        </ng-container>
-
-        <ng-template *ngIf="!dataSource">
-          <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
-        </ng-template>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>

@@ -118,6 +118,8 @@
               [disabled]="!f.valid"
             >
               Save
+              <mat-icon *ngIf="isLoading"><mat-spinner mode="indeterminate" diameter="21">
+              </mat-spinner></mat-icon>
             </button>
           </form>
         </mat-card-content>

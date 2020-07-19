@@ -11,6 +11,7 @@ import { OrderService } from 'shared/services/order.service';
 })
 export class ShippingFormComponent {
   @Input('cartId') cartId: string;
+  isLoading = false;
 
   constructor(
     private orderService: OrderService,
@@ -23,7 +24,7 @@ export class ShippingFormComponent {
     if (!form.valid) {
       return;
     }
-
+    this.isLoading = true;
     try {
       const shipping = { ...form.value };
       const order = {
@@ -40,13 +41,9 @@ export class ShippingFormComponent {
         this.router.navigate(['/admin/orders']);
       else this.router.navigate(['/my/orders']);
     } catch (err) {
-      let { error } = err;
-
-      if (!error) {
-        error = err;
-      }
-
-      this.toastr.error(error);
+      this.toastr.error(err.error);
+    } finally {
+      this.isLoading = false;
     }
   }
 }

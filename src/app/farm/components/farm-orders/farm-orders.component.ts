@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -21,6 +22,7 @@ const { FARM_ORDER } = StorageKey;
   styleUrls: ['./farm-orders.component.scss'],
 })
 export class FarmOrdersComponent implements OnInit {
+  isLoading = true;
   sortedOrders: FarmOrder[] = [];
   orders: FarmOrder[] = [];
   matchedOrder: FarmOrder;
@@ -41,7 +43,8 @@ export class FarmOrdersComponent implements OnInit {
     private orderService: OrderService,
     private authService: AuthService,
     private farmService: FarmService,
-    private storage: StorageService
+    private storage: StorageService,
+    private toastr: ToastrService
   ) {}
 
   async ngOnInit() {
@@ -53,6 +56,11 @@ export class FarmOrdersComponent implements OnInit {
           this.orders = JSON.parse(JSON.stringify(result));
           this.sortOrdersByInterval(result, this.timeInterval.interval);
         }
+        this.isLoading = false;
+      })
+      .catch((err) => {
+        this.toastr.error(err.error);
+        this.isLoading = false;
       });
   }
 
@@ -96,8 +104,13 @@ export class FarmOrdersComponent implements OnInit {
               .indexOf(item.product._id);
 
             this.matchedOrder.items[productIndex].quantity += item.quantity;
-            this.matchedOrder.items[productIndex].itemTotalPrice +=
-              item.itemTotalPrice;
+
+            this.matchedOrder.items[productIndex].itemTotalPrice = Number(
+              (
+                this.matchedOrder.items[productIndex].itemTotalPrice +
+                item.itemTotalPrice
+              ).toFixed(2)
+            );
           } else {
             this.matchedOrder.productIds.push(item.product._id);
             this.matchedOrder.items.push(item);
@@ -161,15 +174,19 @@ export class FarmOrdersComponent implements OnInit {
   }
 
   calculateTotal(order: FarmOrder) {
-    return order.items.reduce((sum, i) => {
+    const total = order.items.reduce((sum, i) => {
       return sum + i.itemTotalPrice;
     }, 0);
+
+    return Number(total.toFixed(2));
   }
 
   calculateTotalAllOrders() {
-    return this.sortedOrders.reduce((sum, order) => {
+    const total = this.sortedOrders.reduce((sum, order) => {
       return sum + this.calculateTotal(order);
     }, 0);
+
+    return Number(total.toFixed(2));
   }
 
   selected(event) {

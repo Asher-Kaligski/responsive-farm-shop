@@ -15,6 +15,7 @@ export interface Item {
   styleUrls: ['./product-quantity.component.scss'],
 })
 export class ProductQuantityComponent {
+  isLoading = false;
   @Input('product') product: Product;
   @Input('shopping-cart') shoppingCart: ShoppingCart;
 
@@ -35,6 +36,7 @@ export class ProductQuantityComponent {
   }
 
   private async updateItemQuantity(change: number) {
+    this.isLoading = true;
     try {
       const item: Item = {
         productId: this.product._id,
@@ -51,6 +53,8 @@ export class ProductQuantityComponent {
       }
 
       this.toastr.error(error);
+    } finally {
+      this.isLoading = false;
     }
   }
 

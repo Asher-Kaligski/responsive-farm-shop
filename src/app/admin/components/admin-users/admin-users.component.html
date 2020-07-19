@@ -82,14 +82,6 @@
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="noRecord">
-          <mat-footer-cell *matFooterCellDef>No users found.</mat-footer-cell>
-        </ng-container>
-
-        <ng-template *ngIf="!dataSource">
-          <mat-footer-row *matFooterRowDef="['noRecord']"></mat-footer-row>
-        </ng-template>
-
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
