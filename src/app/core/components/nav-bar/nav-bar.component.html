@@ -8,7 +8,13 @@
     <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
   </button>
 
-  <a mat-mini-fab [ngClass.gt-sm]="'ml-4'" class="logo-icon" routerLink="/" color="primary">
+  <a
+    mat-mini-fab
+    [ngClass.gt-sm]="'ml-4'"
+    class="logo-icon"
+    routerLink="/"
+    color="primary"
+  >
     <mat-icon>storefront</mat-icon>
   </a>
   <span *ngIf="media.isActive('md') || media.isActive('lg')" class="ml-2"
@@ -53,6 +59,7 @@
     [routerLink]="['/edit-user/', authService.currentUser._id]"
     fxLayout="row"
     fxLayoutAlign="space-between center"
+    routerLinkActive="active-list-item"
     mat-menu-item
   >
     <span>Profile</span>
@@ -64,6 +71,7 @@
     (click)="authService.logout()"
     fxLayout="row"
     fxLayoutAlign="space-between center"
+    routerLinkActive="active-list-item"
     mat-menu-item
   >
     <span>Log Out</span>
@@ -99,32 +107,64 @@
         *ngIf="!authService.currentUser.roles.includes('ADMIN')"
         mat-list-item
         routerLink="/my/orders"
+        routerLinkActive="active-list-item"
         (click)="sidenav.toggle()"
-        >My Orders</a
+        ><h2 matLine>My Orders</h2>
+        <mat-icon matListIcon>touch_app</mat-icon></a
       >
       <ng-container
         *ngIf="authService.currentUser.roles.includes('FARM_OWNER')"
       >
-        <a mat-list-item routerLink="/farm/update-farm" (click)="sidenav.toggle()"
-          >Farm Details</a
+        <a
+          mat-list-item
+          routerLink="/farm/update-farm"
+          routerLinkActive="active-list-item"
+          (click)="sidenav.toggle()"
+          ><h2 matLine>Farm Details</h2>
+          <mat-icon matListIcon>add_business</mat-icon></a
         >
-        <a mat-list-item routerLink="/farm/products" (click)="sidenav.toggle()"
-          >Manage Farm Products</a
+        <a
+          mat-list-item
+          routerLink="/farm/products"
+          routerLinkActive="active-list-item"
+          (click)="sidenav.toggle()"
+          ><h2 matLine>Farm Products</h2>
+          <mat-icon matListIcon>shopping_basket</mat-icon></a
         >
-        <a mat-list-item routerLink="/farm/orders" (click)="sidenav.toggle()"
-          >Farm Orders</a
+        <a
+          mat-list-item
+          routerLink="/farm/orders"
+          routerLinkActive="active-list-item"
+          (click)="sidenav.toggle()"
+          ><h2 matLine>Farm Orders</h2>
+          <mat-icon matListIcon>list</mat-icon></a
         >
       </ng-container>
 
       <ng-container *ngIf="authService.currentUser.roles.includes('ADMIN')">
-        <a mat-list-item routerLink="/admin/orders" (click)="sidenav.toggle()"
-          >Manage Orders</a
+        <a
+          mat-list-item
+          routerLink="/admin/orders"
+          routerLinkActive="active-list-item"
+          (click)="sidenav.toggle()"
+          ><h2 matLine>Manage Orders</h2>
+          <mat-icon matListIcon>list</mat-icon></a
         >
-        <a mat-list-item routerLink="/admin/products" (click)="sidenav.toggle()"
-          >Manage Products</a
+        <a
+          mat-list-item
+          routerLink="/admin/products"
+          routerLinkActive="active-list-item"
+          (click)="sidenav.toggle()"
+          ><h2 matLine>Manage Products</h2>
+          <mat-icon matListIcon>shopping_basket</mat-icon></a
         >
-        <a mat-list-item routerLink="/admin/users" (click)="sidenav.toggle()"
-          >Manage Users</a
+        <a
+          mat-list-item
+          routerLink="/admin/users"
+          routerLinkActive="active-list-item"
+          (click)="sidenav.toggle()"
+          ><h2 matLine>Manage Users</h2>
+          <mat-icon matListIcon>people</mat-icon></a
         >
       </ng-container>
     </mat-nav-list>
