@@ -54,50 +54,39 @@
 </mat-toolbar>
 
 <mat-menu #userProfileMenu="matMenu">
-  <button
+  <a
     *ngIf="authService.isLogged()"
     [routerLink]="['/edit-user/', authService.currentUser._id]"
-    fxLayout="row"
-    fxLayoutAlign="space-between center"
     routerLinkActive="active-list-item"
     mat-menu-item
   >
-    <span>Profile</span>
     <mat-icon>account_box</mat-icon>
-  </button>
-
-  <button
+    <span>Profile</span>
+  </a>
+  <a
     *ngIf="authService.isLogged()"
     (click)="authService.logout()"
-    fxLayout="row"
-    fxLayoutAlign="space-between center"
     routerLinkActive="active-list-item"
     mat-menu-item
   >
-    <span>Log Out</span>
     <mat-icon>logout</mat-icon>
-  </button>
+    <span>Log Out</span>
+  </a>
 </mat-menu>
 
 <mat-menu #menu="matMenu">
-  <button
-    routerLink="/login"
-    fxLayout="row"
-    fxLayoutAlign="space-between center"
-    mat-menu-item
-  >
-    <span>Login</span>
+  <a routerLink="/login" routerLinkActive="active-list-item" mat-menu-item>
     <mat-icon>login</mat-icon>
-  </button>
-  <button
+    <span>Login</span>
+  </a>
+  <a
     routerLink="/registration"
-    fxLayout="row"
-    fxLayoutAlign="space-between center"
+    routerLinkActive="active-list-item"
     mat-menu-item
   >
-    <span>Register</span>
     <mat-icon>how_to_reg</mat-icon>
-  </button>
+    <span>Register</span>
+  </a>
 </mat-menu>
 
 <mat-sidenav-container>
