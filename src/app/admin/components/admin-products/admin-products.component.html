@@ -34,14 +34,14 @@
 
         <ng-container matColumnDef="title">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Farm Name
+            Title
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ row.title }} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="farmName">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Title
+            Farm Name
           </mat-header-cell>
           <mat-cell *matCellDef="let row"> {{ row.farm.name }} </mat-cell>
         </ng-container>
