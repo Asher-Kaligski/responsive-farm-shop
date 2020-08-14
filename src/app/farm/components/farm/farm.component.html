@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card *ngIf="farm$ | async as farm">
     <mat-card-content>
-      <form #f="ngForm" (ngSubmit)="submitOnUpdate(f)">
+      <form #f="ngForm" novalidate (ngSubmit)="submitOnUpdate(f)">
         <h1>Update Farm Details</h1>
 
         <mat-form-field class="full-width-input">

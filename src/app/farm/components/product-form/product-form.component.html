@@ -3,7 +3,7 @@
     <div class="col-md-6">
       <mat-card>
         <mat-card-content>
-          <form #f="ngForm" (ngSubmit)="save(f)">
+          <form #f="ngForm" novalidate (ngSubmit)="save(f)">
             <h1>Create Product</h1>
 
             <mat-form-field class="full-width-input">
@@ -118,8 +118,9 @@
               [disabled]="!f.valid"
             >
               Save
-              <mat-icon *ngIf="isLoading"><mat-spinner mode="indeterminate" diameter="21">
-              </mat-spinner></mat-icon>
+              <mat-icon *ngIf="isLoading"
+                ><mat-spinner mode="indeterminate" diameter="21"> </mat-spinner
+              ></mat-icon>
             </button>
           </form>
         </mat-card-content>

@@ -1,7 +1,7 @@
 <div class="container">
   <mat-card *ngIf="user">
     <mat-card-content>
-      <form #f="ngForm" (ngSubmit)="submit(f)">
+      <form #f="ngForm" novalidate (ngSubmit)="submit(f)">
         <h1>Edit User Profile</h1>
 
         <mat-form-field class="full-width-input">
@@ -86,7 +86,7 @@
         </mat-form-field>
 
         <mat-form-field class="full-width-input">
-          <mat-label>New Password</mat-label>
+          <mat-label>Password</mat-label>
           <input
             matInput
             required
@@ -102,7 +102,7 @@
               Password is required
             </mat-error>
             <mat-error *ngIf="password.errors.pattern">
-              Password doesn't match the pattern
+              Your password must be between 8 and 15 characters
             </mat-error>
           </ng-container>
         </mat-form-field>
@@ -174,8 +174,9 @@
           class="mx-3"
         >
           Submit
-          <mat-icon *ngIf="isLoading"><mat-spinner mode="indeterminate" diameter="21">
-          </mat-spinner></mat-icon>
+          <mat-icon *ngIf="isLoading"
+            ><mat-spinner mode="indeterminate" diameter="21"> </mat-spinner
+          ></mat-icon>
         </button>
       </form>
     </mat-card-content>
