@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'shared/services/auth-guard.service';
+import { NoAccessComponent } from '../core/components/no-access/no-access.component';
 
 import { CheckOutComponent } from './components/check-out/check-out.component';
 import { MyOrdersComponent } from './components/my-orders/my-orders.component';
@@ -9,6 +10,8 @@ import { ShoppingCartComponent } from './components/shopping-cart/shopping-cart.
 import { ViewOrderComponent } from './components/view-order/view-order.component';
 
 const routes: Routes = [
+
+  { path: 'no-access', component: NoAccessComponent },
   { path: 'products', component: ProductsComponent },
   { path: 'shopping-cart', component: ShoppingCartComponent },
   { path: 'check-out', component: CheckOutComponent, canActivate: [AuthGuard] },
@@ -23,6 +26,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  
+exports: [RouterModule],
 })
 export class ShoppingRoutingModule {}
